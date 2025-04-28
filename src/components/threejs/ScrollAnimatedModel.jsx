@@ -10,20 +10,31 @@ export default function ScrollAnimatedModel() {
 
   useEffect(() => {
     let renderer;
-    let scene, camera, model;
     let animationFrameId;
-    let composer;
+    let mobileView = false;
+    let updateMobileCameraRotation = 0;
     let windowHalfX = window.innerWidth / 2;
     let windowHalfY = window.innerHeight / 2;
+
+    if(windowHalfX < windowHalfY){
+      mobileView = true;
+    }
+
+    let scene, camera;
+    let composer;
     const targetQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, 0));
     const lerpAmount = 0.01;
+    const desktopScrollYEnd = 2200;
+    const scene1ScrollYEnd = desktopScrollYEnd + window.innerHeight + 700;
+    const rotationSpeed = 0.00002;
+
 
 
     // Scene 2: Interactive dots grid (Perspective)
     let scene2, camera2;
 
     // Mouse and raycaster for scene2 interaction
-    let mouse = new THREE.Vector2(-10000, -10000);
+    let mouse = new THREE.Vector2(0, 0);
     const raycaster = new THREE.Raycaster();
 
     // Dots array
@@ -37,7 +48,7 @@ export default function ScrollAnimatedModel() {
     
 
     // Setup function encapsulating all initialization
-    function setupScene() {
+    function setupRoomScene() {
       // Scene
       scene = new THREE.Scene();
       // Camera
@@ -99,6 +110,11 @@ async function loadAndShowModelSequentially(url, scene) {
 
     }
   });
+  // making desktop move to 2nd place while rendering
+  if (meshes.length > 2) {
+    const lastElement = meshes.pop(); // Remove the last element
+    meshes.splice(1, 0, lastElement); // Insert the last element at the second position
+  }
 
   // Reveal meshes one by one with wireframe first, then full material
   for (const mesh of meshes) {
@@ -118,26 +134,17 @@ async function loadAndShowModelSequentially(url, scene) {
     mesh.material = originalMaterial;
 
     await sleep(30); // small delay before next mesh
-    mesh.updateWorldMatrix(true, false); // Ensure the world matrix is up to date
-
-    // const worldPos = new THREE.Vector3();
-    // mesh.getWorldPosition(worldPos);
-    // console.log(mesh.name, 'world position:', worldPos);
-//     const box = new THREE.Box3().setFromObject(mesh);
-// const center = new THREE.Vector3();
-// box.getCenter(center);
-// console.log(center, mesh); // This is the mesh's center in world coordinates
 
   }
 }
 
 
-// Usage example:
-loadAndShowModelSequentially('/models/sci-fi_computer_room.glb', scene)
-  .then(() => {
-    console.log('All meshes loaded and revealed!');
-  })
-  .catch(console.error);
+    // Usage example:
+    loadAndShowModelSequentially('/models/sci-fi_computer_room.glb', scene)
+      .then(() => {
+        console.log('All meshes loaded and revealed!');
+      })
+      .catch(console.error);
 
 
 
@@ -162,7 +169,7 @@ loadAndShowModelSequentially('/models/sci-fi_computer_room.glb', scene)
     }
 
         // === Setup Scene 2 (Interactive Dots) ===
-    const setupScene2 = () => {
+    const setupInteractiveDotsScene = () => {
       scene2 = new THREE.Scene();
       camera2 = new THREE.PerspectiveCamera(
         75,
@@ -202,6 +209,11 @@ loadAndShowModelSequentially('/models/sci-fi_computer_room.glb', scene)
       camera.updateProjectionMatrix();
       windowHalfX = window.innerWidth / 2;
       windowHalfY = window.innerHeight / 2;
+      if(windowHalfX < windowHalfY){
+        mobileView = true;
+      } else {
+        mobileView = false;
+      }
       renderer.setSize(window.innerWidth, window.innerHeight);
       composer.setSize(window.innerWidth, window.innerHeight);
 
@@ -210,12 +222,10 @@ loadAndShowModelSequentially('/models/sci-fi_computer_room.glb', scene)
       camera2.updateProjectionMatrix();
 
       // Rebuild fading squares grid
-      setupScene();
+      setupRoomScene();
       // Rebuild dots grid
-      setupScene2();
+      setupInteractiveDotsScene();
     }
-
-
 
     // Mouse move handler
     function onMouseMove(event) {
@@ -223,17 +233,18 @@ loadAndShowModelSequentially('/models/sci-fi_computer_room.glb', scene)
       mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
       // for scene 1
-      const deltaMove = {
-        x: event.clientX - windowHalfX,
-        y: event.clientY - windowHalfY,
-      };
+      if (window.scrollY < desktopScrollYEnd) {
 
-      const rotationSpeed = 0.00002;
-      camera.rotation.y += -deltaMove.x * rotationSpeed;
-      camera.rotation.x += -deltaMove.y * rotationSpeed;
+        const deltaMove = {
+          x: event.clientX - windowHalfX,
+          y: event.clientY - windowHalfY,
+        };
+
+        camera.rotation.y += -deltaMove.x * rotationSpeed;
+        camera.rotation.x += -deltaMove.y * rotationSpeed;
     }
 
-
+    }
 
     // === Hover interaction for dots ===
     const handleHover = () => {
@@ -262,30 +273,45 @@ loadAndShowModelSequentially('/models/sci-fi_computer_room.glb', scene)
     window.addEventListener('mousemove', handleHover);
 
     //renderer.domElement.addEventListener('mouseleave', () => console.log(camera.position));
-
+    // const geometry = new THREE.PlaneGeometry(3, 3);
+    // const material = new THREE.MeshBasicMaterial({ color: 0x18181a });
+    // const overlay = new THREE.Mesh(geometry, material);
+    // // Make sure the overlay is rendered in front of everything
+    // overlay.position.z = 0.18;
+    
     function onScroll() {
-      // for desktop
-      camera.position.z = Math.max(0.20, 2.3 - 0.001 * window.scrollY);
-      camera.position.y = Math.min(0.09, 0 + 0.00005 * window.scrollY);
-      camera.position.x = Math.min(-0.46, -0.55 + 0.00005 * window.scrollY);
 
-      // for mobiles
-      // camera.position.z = Math.max(0.20, 2.3 - 0.001 * window.scrollY);
-      // camera.position.y = Math.min(0.09, 0 + 0.00005 * window.scrollY);
-      // camera.position.x = Math.max(-.975, -0.55 - 0.0002 * window.scrollY);
+      if (!mobileView){
+        // for desktop
+        camera.position.set( 
+            Math.min(-0.46, -0.55 + 0.00005 * window.scrollY), //1800 window.scrollY, use 00004285714 for 2100
+            Math.min(0.09, 0 + 0.00005 * window.scrollY), //1800
+            Math.max(0.1, 2.3 - 0.001 * window.scrollY)); //2200, use 0.20 for 2100
+            // if (window.scrollY >= 2100){
+            //   scene.add(overlay);
+            // } else {
+            //   scene.remove(overlay);
+            // }
+      } else {
+        // for mobiles
+        updateMobileCameraRotation = Math.min(0.193154851, 0.00012*window.scrollY)
+        camera.position.set( 
+          Math.max(-.975, -0.55 - 0.0002 * window.scrollY), //2125
+          Math.min(0.09, 0 + 0.00005 * window.scrollY),
+          Math.max(0.1, 2.3 - 0.001 * window.scrollY)); //2200, use 0.20 for 2100
+      }
 
-
-      const epsilon = 0.0001;
-      if (
-        Math.abs(camera.position.z - 0.20) < epsilon &&
-        Math.abs(camera.position.y - 0.09) < epsilon &&
-        Math.abs(camera.position.x + 0.46) < epsilon
-      ) {
+      if (window.scrollY >= scene1ScrollYEnd) {
         showSecondScene = true;
+        document.body.style.backgroundColor = "#f7f5e8";
+        document.body.style.color = "#000000";
         // Optionally remove event listener if no longer needed
         // window.removeEventListener('scroll', onScroll);
       } else {
         showSecondScene = false;
+        document.body.style.backgroundColor = "#18181a";
+        document.body.style.color = "#ffffff";
+
       }
     }
   
@@ -301,8 +327,12 @@ loadAndShowModelSequentially('/models/sci-fi_computer_room.glb', scene)
 
       if (!showSecondScene) {
         camera.quaternion.slerp(targetQuaternion, lerpAmount);
+
         // for mobile view scrolling into vertical desktop
-        //camera.rotation.y = -6.1
+        if(mobileView){
+          camera.rotation.y = updateMobileCameraRotation  //0.193154851 //or -6.1
+        }
+
         composer.render();
       } else {
         // Only render scene 2
@@ -314,8 +344,8 @@ loadAndShowModelSequentially('/models/sci-fi_computer_room.glb', scene)
     }
 
     // Initialize scene and start animation
-    setupScene();
-    setupScene2();
+    setupRoomScene();
+    setupInteractiveDotsScene();
 
     animate();
 
@@ -331,21 +361,12 @@ loadAndShowModelSequentially('/models/sci-fi_computer_room.glb', scene)
   }, []);
 
   return (
-    <></>
+    <>
+        <canvas className='w-full h-screen fixed top-0 z-111' id="retrocomputer-canvas"></canvas>
+        <div className='w-full h-[2200px]' ></div>
+        <div className='w-full h-screen' ></div>
+        <div className='relative flex w-full w-full h-[500px] z-112 items-center justify-center' > <p>check,</p></div>
+        <div className='relative flex w-full w-full h-[500px] z-112 items-center justify-center' > <p>Hello,</p></div>
+    </>
   );
 }
-
-
-
-//       const center = new THREE.Vector3(x, y, z); // Center of your search
-// const radius = 10; // Your radius
-// const objectsInRadius = [];
-
-// scene.traverse((object) => {
-//   if (object.isMesh) {
-//     const distance = object.position.distanceTo(center);
-//     if (distance <= radius) {
-//       objectsInRadius.push(object);
-//     }
-//   }
-// });

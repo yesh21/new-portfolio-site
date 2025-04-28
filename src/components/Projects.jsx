@@ -3,7 +3,7 @@ import Swiper_Slider from './Swiper-slider';
 
 const ProjectCard = () => {
   return (
-    <div className="max-w-[1440px] h-screen mx-auto p-4 bg-[#f7f5e8]">
+    <div className="max-w-[1440px] h-screen mx-auto p-4">
       <div className="flex flex-col md:flex-row border-b border-black/20 h-full justify-between">
         {/* Left image side */}
         <div className="md:w-1/2 relative">

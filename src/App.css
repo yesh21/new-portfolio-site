@@ -1,1 +1,26 @@
+ .danger-edges {
+    pointer-events: none;
+    /* Red vignette using radial gradient */
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255,0,0,0) 60%,
+      rgba(255,0,0,0.4) 100%
+    );
+    /* Optional: animated pulse */
+    animation: dangerPulse 5s linear 3s forwards;
+  }
+  @keyframes dangerPulse {
+    0% {
+      opacity: 1;
+      visibility: visible;
+    }
+    90% {
+      opacity: 0.5;
+      visibility: visible;
+    }
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
 
