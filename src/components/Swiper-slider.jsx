@@ -1,5 +1,5 @@
 import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -7,15 +7,25 @@ import 'swiper/css/zoom';
 
 import { Zoom, Navigation, Pagination, EffectCreative } from 'swiper/modules';
 
+function CustomNavButtons() {
+  const swiper = useSwiper();
+  return (
+    <div className="absolute z-2 top-0 right-4">
+      <button onClick={() => swiper.slidePrev()}>Prev</button>
+      <button onClick={() => swiper.slideNext()}>Next</button>
+    </div>
+  );
+}
+
 
 export default function Swiper_Slider() {
     return (
-      <section className="hero-section">
+      <section className="sticky bottom-0 h-[50vh]">
         <Swiper
           rewind={true}
           zoom={true}
           pagination={{ clickable: true }}
-          navigation={true}
+          //navigation={true}
           modules={[Zoom, Pagination, Navigation, EffectCreative]}
           grabCursor={true}
           effect={'creative'}
@@ -28,7 +38,7 @@ export default function Swiper_Slider() {
               translate: ['100%', 0, 0],
             },
           }}
-          className="mySwiper"
+          className="mySwiper h-[50vh]"
         >
           <SwiperSlide>
           <div className="swiper-zoom-container">
@@ -45,6 +55,7 @@ export default function Swiper_Slider() {
             <img  src="https://placehold.co/600x400" alt="Slide 1" />
             </div>
           </SwiperSlide>
+          <CustomNavButtons/>
         </Swiper>
       </section>
     );

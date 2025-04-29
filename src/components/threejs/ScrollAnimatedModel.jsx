@@ -5,9 +5,12 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { GlitchPass } from "three/examples/jsm/postprocessing/GlitchPass.js";
-import { TTFLoader } from "three/examples/jsm/loaders/TTFLoader.js";
-import { Font } from "three/examples/jsm/loaders/FontLoader.js";
-import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
+// import { TTFLoader } from "three/examples/jsm/loaders/TTFLoader.js";
+// import { Font } from "three/examples/jsm/loaders/FontLoader.js";
+// import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+import { HorizontalBlurShader } from 'three/examples/jsm/shaders/HorizontalBlurShader.js';
+//import { VerticalBlurShader } from 'three/examples/jsm/shaders/VerticalBlurShader.js';
 
 export default function ScrollAnimatedModel() {
   useEffect(() => {
@@ -37,6 +40,7 @@ export default function ScrollAnimatedModel() {
 
     let glitchPass = new GlitchPass();
     glitchPass.enabled = false;
+    const hBlur = new ShaderPass(HorizontalBlurShader);
 
     // Scene 2: Interactive dots grid (Perspective)
     let scene2, camera2;
@@ -53,7 +57,7 @@ export default function ScrollAnimatedModel() {
       alpha: true,
       canvas,
     });
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 
     // Setup function encapsulating all initialization
     function setupRoomScene() {
@@ -165,12 +169,14 @@ export default function ScrollAnimatedModel() {
       // const mesh = new THREE.Mesh(geometry, material);
       // mesh.position.set(-0.43, -1, 1)
       // scene.add(mesh);
-      const video = document.getElementById("video");
-      const videoTexture = new THREE.VideoTexture(video);
-      videoTexture.minFilter = THREE.LinearFilter;
-      videoTexture.magFilter = THREE.LinearFilter;
+      // const video = document.getElementById("video");
+      // const videoTexture = new THREE.VideoTexture(video);
+      // videoTexture.minFilter = THREE.LinearFilter;
+      // videoTexture.magFilter = THREE.LinearFilter;
       const geometry = new THREE.PlaneGeometry(5.1 / 9, 4.5 / 16); // Match video aspect ratio
-      const material = new THREE.MeshBasicMaterial({ map: videoTexture });
+      const material = new THREE.MeshBasicMaterial({ 
+        color: 0x18181a
+      });
       const mesh = new THREE.Mesh(geometry, material);
       mesh.position.set(-0.45, 0.12, 0.085);
       scene.add(mesh);
@@ -190,6 +196,10 @@ export default function ScrollAnimatedModel() {
 
       composer.addPass(bloomPass);
       composer.addPass(glitchPass);
+  
+    hBlur.uniforms.h.value = 0.0;
+    composer.addPass(hBlur);
+
     }
 
     // === Setup Scene 2 (Interactive Dots) ===
@@ -228,8 +238,6 @@ export default function ScrollAnimatedModel() {
 
     // Window resize handler
     function onWindowResize() {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
       windowHalfX = window.innerWidth / 2;
       windowHalfY = window.innerHeight / 2;
       if (windowHalfX < windowHalfY) {
@@ -237,17 +245,29 @@ export default function ScrollAnimatedModel() {
       } else {
         mobileView = false;
       }
+      camera.aspect = windowHalfX / windowHalfY;
+      camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
       composer.setSize(window.innerWidth, window.innerHeight);
 
       // Update camera2 (perspective)
       camera2.aspect = window.innerWidth / window.innerHeight;
       camera2.updateProjectionMatrix();
+      if(!mobileView){
+        camera.aspect = windowHalfX / windowHalfY;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        composer.setSize(window.innerWidth, window.innerHeight);
+  
+        // Update camera2 (perspective)
+        camera2.aspect = window.innerWidth / window.innerHeight;
+        camera2.updateProjectionMatrix();
 
-      // Rebuild fading squares grid
-      setupRoomScene();
-      // Rebuild dots grid
-      setupInteractiveDotsScene();
+        // Rebuild fading squares grid
+        setupRoomScene();
+        // Rebuild dots grid
+        setupInteractiveDotsScene();
+      }
     }
 
     // === Hover interaction for dots ===
@@ -339,11 +359,15 @@ export default function ScrollAnimatedModel() {
         scene1OnScrollSettings();
         glitchPass.enabled = false;
         //composer.render();
+        hBlur.enabled = true;
+        const blurAmount = 0.004; // Adjust multiplier for strength
+        hBlur.uniforms.h.value = blurAmount;
 
       } else if(window.scrollY < camera1ScrollYEnd+windowHalfY) {
 
       glitchPass.enabled = true;
       glitchPass.goWild = true;
+      // // Update blur based on scroll position
 
       } else if(window.scrollY < scene1ScrollYEnd) {
         glitchPass.enabled = false;
@@ -378,6 +402,8 @@ export default function ScrollAnimatedModel() {
         }
 
         composer.render();
+        hBlur.enabled = false;
+
       } else {
         // Only render scene 2
         // handleDotsOnMouseMove(); // update dot positions if needed
@@ -408,7 +434,7 @@ export default function ScrollAnimatedModel() {
   return (
     <>
       <canvas
-        className="w-full h-screen fixed top-0"
+        className="w-full h-lvh fixed top-0"
         id="retrocomputer-canvas"
       ></canvas>
       <div className="w-full h-[2200px]"></div>

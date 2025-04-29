@@ -6,7 +6,6 @@ import ProjectCard from "./components/Projects";
 import SystemInfo from "./components/BatteryIndicator";
 import { useState, useEffect } from "react";
 import Footer from "./components/Footer";
-import videoFile from "./assets/3130284-hd_1280_720_30fps.mp4";
 
 function App() {
   const [showLoader, setShowLoader] = useState(true);
@@ -21,9 +20,6 @@ function App() {
       {showLoader && <FadingPixels />}
       <ScrollAnimatedModel />
       <SystemInfo />
-      <video id="video" src={videoFile} muted loop autoPlay playsInline
-        style={{ display: "none" }}
-      ></video>
       {/* <InteractiveDots/> */}
       <ProjectCard />
       <ProjectCard />
