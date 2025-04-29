@@ -1,5 +1,18 @@
 @import "tailwindcss";
+
+
+@font-face {
+  font-family: 'Fira Code Variable';
+  src: url('./fonts/FiraCode-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 700; /* Variable font weight range */
+  font-display: swap;
+  font-style: normal;
+}
+
+
+
 body {
+    font-family: 'Fira Code Variable', monospace;
     background-color: #18181a;
     color: white;
     transition: background-color 3s ease;
