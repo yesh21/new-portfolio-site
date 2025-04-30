@@ -4,7 +4,7 @@ import logo from "../assets/logo.jpg"
 const Footer = () => {
   return (
     <>
-      <footer className="bg-[#18181a] text-[#f9f6e8] relative z-112 min-h-screen">
+      <footer className="bg-[#18181a] text-[#f9f6e8] relative z-112 min-h-svh">
         <div className="flex flex-col md:flex-row justify-around p-4 border-b border-zinc-700 mb-10">
           <div className="flex justify-between items-center font-bold text-3xl py-4">
             Yaswanth Pulavarthi

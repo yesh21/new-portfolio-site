@@ -9,23 +9,23 @@ const ProjectCard = () => {
         <div className="md:w-1/2  md:h-screen relative">
         <div className='md:h-[50vh]'></div>
         <Swiper_Slider/>
-          <div className="absolute top-2 left-2 text-white font-extrabold text-xs leading-none tracking-widest">
+          <div className="absolute bottom-2 left-2 text-white font-extrabold text-xs leading-none tracking-widest">
             TEXT
           </div>
-          <div className="absolute top-2 right-2 text-[#3a6a4f] font-extrabold text-xs leading-none tracking-widest">
+          <div className="absolute bottom-2 right-2 text-[#3a6a4f] font-extrabold text-xs leading-none tracking-widest">
           TEXT
           </div>
         </div>
         <div className="md:w-1/2 flex flex-col justify-between p-6 relative">
           <div className="flex justify-between text-xs font-extrabold tracking-widest mb-2">
-            <div>© TEXT</div>
+            {/* <div>© TEXT</div>
             <div>TEXT</div>
-            <div>TEXT</div>
+            <div>TEXT</div> */}
           </div>
           <h1 className="text-[2.5rem] leading-[1.1] font-bold max-w-[400px]">
             HELLO WROLD
           </h1>
-          <div className="mt-10 flex items-center space-x-2 text-sm">
+          <div className="mt-10 flex items-center space-x-2 text-md">
             <span>View project</span>
             <button
               aria-label="View project"
@@ -42,10 +42,10 @@ const ProjectCard = () => {
               <div className="text-black/40 font-semibold">Technology</div>
             </div>
             <div>
-              <div className="font-extrabold uppercase tracking-widest text-black/80">
+              <div className="font-extrabol text-md uppercase tracking-widest text-black/80">
               Technology
               </div>
-              <div className="text-black/40 font-semibold">
+              <div className="text-black/40 text-md font-semibold">
                 React / Django / LLMs
               </div>
             </div>

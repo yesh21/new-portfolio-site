@@ -10,7 +10,7 @@ import { Zoom, Navigation, Pagination, EffectCreative } from 'swiper/modules';
 function CustomNavButtons() {
   const swiper = useSwiper();
   return (
-    <div className="absolute z-2 top-0 right-4">
+    <div className="absolute z-2 top-0 left-0">
       <button onClick={() => swiper.slidePrev()}>Prev</button>
       <button onClick={() => swiper.slideNext()}>Next</button>
     </div>
@@ -41,17 +41,17 @@ export default function Swiper_Slider() {
           className="mySwiper h-[50vh]"
         >
           <SwiperSlide>
-          <div className="swiper-zoom-container">
+          <div className="">
             <img className="" src="https://placehold.co/600x400" alt="Slide 1" />
             </div>
           </SwiperSlide>
           <SwiperSlide>
-          <div className="swiper-zoom-container">
+          <div className="">
             <img  src="https://placehold.co/600x400" alt="Slide 1" />
             </div>
           </SwiperSlide>
           <SwiperSlide>
-          <div className="swiper-zoom-container">
+          <div className="">
             <img  src="https://placehold.co/600x400" alt="Slide 1" />
             </div>
           </SwiperSlide>
