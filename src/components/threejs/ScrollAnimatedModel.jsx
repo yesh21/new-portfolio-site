@@ -47,7 +47,11 @@ export default function ScrollAnimatedModel() {
 
     let glitchPass = new GlitchPass();
     glitchPass.enabled = false;
+    glitchPass.goWild = true;
+
     const hBlur = new ShaderPass(HorizontalBlurShader);
+    const blurAmount = 0.004; // Adjust multiplier for strength
+    hBlur.uniforms.h.value = blurAmount;
 
     // Scene 2: Interactive dots grid (Perspective)
     let scene2, camera2;
@@ -240,7 +244,7 @@ export default function ScrollAnimatedModel() {
       composer.addPass(bloomPass);
       composer.addPass(glitchPass);
 
-      hBlur.uniforms.h.value = 0.0;
+      //hBlur.uniforms.h.value = 0.0;
       composer.addPass(hBlur);
     }
 
@@ -330,9 +334,14 @@ export default function ScrollAnimatedModel() {
     };
 
     // Mouse move handler
-    function onMouseMove(event) {
+    function onMouseMove(event) {  
       // for scene 1
       if (window.scrollY < camera1ScrollYEnd) {
+        window.scrollBy({
+          top: 3,
+          behavior: 'auto' // Required for manual control of smoothness
+        });
+        
         const deltaMove = {
           x: event.clientX - windowHalfX,
           y: event.clientY - windowHalfY,
@@ -367,7 +376,7 @@ export default function ScrollAnimatedModel() {
         camera.position.set(
           Math.max(-0.975, -0.55 - 0.0002 * window.scrollY), //2125
           Math.min(0.09, 0 + 0.00005 * window.scrollY),
-          Math.max(0.25, 2.3 - 0.00097 * window.scrollY)
+          Math.max(0.27, 2.3 - 0.00097 * window.scrollY)
         ); //2000, use 0.20 for 2100
       }
     }
@@ -378,11 +387,9 @@ export default function ScrollAnimatedModel() {
         glitchPass.enabled = false;
         //composer.render();
         hBlur.enabled = true;
-        const blurAmount = 0.004; // Adjust multiplier for strength
-        hBlur.uniforms.h.value = blurAmount;
       } else if (window.scrollY < camera1ScrollYEnd + windowHalfY) {
+        scene1OnScrollSettings();
         glitchPass.enabled = true;
-        glitchPass.goWild = true;
         // // Update blur based on scroll position
       } else if (window.scrollY < scene1ScrollYEnd) {
         glitchPass.enabled = false;
@@ -407,7 +414,7 @@ export default function ScrollAnimatedModel() {
     function animate() {
       animationFrameId = requestAnimationFrame(animate);
 
-      if (!showSecondScene) {
+      if (window.scrollY < camera1ScrollYEnd - windowHalfY - windowHalfY) {
         camera.quaternion.slerp(targetQuaternion, lerpAmount);
 
         // for mobile view scrolling into vertical desktop
@@ -417,10 +424,26 @@ export default function ScrollAnimatedModel() {
 
         composer.render();
         hBlur.enabled = false;
+      } else if (window.scrollY < camera1ScrollYEnd + windowHalfY+ windowHalfY) {
+        window.scrollBy({
+          top: 4,
+          behavior: 'auto' // Required for manual control of smoothness
+        });
+        camera.quaternion.slerp(targetQuaternion, lerpAmount*2);
+
+        // for mobile view scrolling into vertical desktop
+        if (mobileView) {
+          camera.rotation.y = updateMobileCameraRotation; //0.193154851 //or -6.1
+        }
+
+        hBlur.enabled = false; //hblur before render helps in stopping the blur effect
+        composer.render();
+      } else if (window.scrollY < scene1ScrollYEnd) {
+        //composer.render();
       } else {
         // Only render scene 2
         // handleDotsOnMouseMove(); // update dot positions if needed
-        renderer.clear();
+        //renderer.clear();
         renderer.render(scene2, camera2);
       }
     }
@@ -448,9 +471,9 @@ export default function ScrollAnimatedModel() {
         className="w-full h-lvh fixed top-0"
         id="room-setup-canvas"
       ></canvas>
-      <div className="w-full h-[2200px]"></div>
+      <div className="w-full h-[2100px]"></div>
       <div className="w-full h-screen"></div>
-      <div className="relative flex w-full w-full h-[500px] z-112 items-center justify-center">
+      <div className="relative flex w-full h-[500px] z-112 items-center justify-center">
         {" "}
         <p>check,</p>
       </div>

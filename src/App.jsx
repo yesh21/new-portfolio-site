@@ -6,6 +6,7 @@ import ProjectCard from "./components/Projects";
 import SystemInfo from "./components/BatteryIndicator";
 import { useState, useEffect } from "react";
 import Footer from "./components/Footer";
+import ScrollSuggestion from "./components/ScrollSuggestion"
 
 function App() {
   const [showLoader, setShowLoader] = useState(true);
@@ -18,6 +19,7 @@ function App() {
   return (
     <>
       {showLoader && <FadingPixels />}
+      <ScrollSuggestion/>
       <ScrollAnimatedModel />
       <SystemInfo />
       {/* <InteractiveDots/> */}

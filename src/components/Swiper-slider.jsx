@@ -40,8 +40,8 @@ export default function Swiper_Slider() {
           }}
           className="mySwiper h-[50vh]"
         >
-          <SwiperSlide>
-          <div className="">
+          <SwiperSlide className="">
+          <div className="absolute bottom-0">
             <img className="" src="https://placehold.co/600x400" alt="Slide 1" />
             </div>
           </SwiperSlide>
