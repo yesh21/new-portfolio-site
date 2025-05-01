@@ -17,19 +17,19 @@ function CustomNavButtons() {
         onClick={() => swiper.slidePrev()}
         className="w-12 h-12 flex items-center justify-center"
       >
-        <FontAwesomeIcon icon={faArrowLeft} className="text-zinc-700" />
+        <FontAwesomeIcon icon={faArrowLeft} className="text-slate-400" />
       </button>
       <button
         onClick={() => swiper.slideNext()}
         className="w-12 h-12 flex items-center justify-center"
       >
-        <FontAwesomeIcon icon={faArrowRight} className="text-zinc-700" />
+        <FontAwesomeIcon icon={faArrowRight} className="text-slate-400" />
       </button>
     </div>
   );
 }
 
-export default function Swiper_Slider() {
+export default function Swiper_Slider({ images }) {
   return (
     <section className="sticky bottom-60 md:bottom-20 md:h-[50vh]">
       <Swiper
@@ -39,32 +39,24 @@ export default function Swiper_Slider() {
         //navigation={true}
         modules={[Zoom, Pagination, Navigation, EffectCreative]}
         grabCursor={true}
-        effect={"creative"}
-        creativeEffect={{
-          prev: {
-            translate: ["0%", 0, 0],
-          },
-          next: {
-            translate: ["100%", 0, 0],
-          },
-        }}
+        // effect={"creative"}
+        // creativeEffect={{
+        //   prev: {
+        //     translate: ["0%", 0, 0],
+        //   },
+        //   next: {
+        //     translate: ["100%", 0, 0],
+        //   },
+        // }}
         className="md:h-[50vh]"
       >
+        {images.map((img, idx) => (
         <SwiperSlide className="">
-          <div className="">
-            <img src="https://placehold.co/600x400" alt="Slide 1"/>
+          <div className="swiper-zoom-container">
+            <img key={idx} src={img} alt={`Project ${idx}`}/>
           </div>
         </SwiperSlide>
-        <SwiperSlide>
-          <div className="">
-            <img src="https://placehold.co/600x400" alt="Slide 1" />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="">
-            <img src="https://placehold.co/600x400" alt="Slide 1" />
-          </div>
-        </SwiperSlide>
+        ))}
         <CustomNavButtons />
       </Swiper>
     </section>

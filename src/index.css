@@ -17,3 +17,7 @@ body {
     color: white;
     transition: background-color 3s ease;
   }
+
+.swiper-wrapper {
+  align-items: center;
+}
