@@ -21,3 +21,8 @@ body {
 .swiper-wrapper {
   align-items: center;
 }
+
+.swiper-zoom-container > img {
+max-width: revert-layer !important;
+max-height: revert-layer !important;
+}

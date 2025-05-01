@@ -12,18 +12,19 @@ import { Zoom, Navigation, Pagination, EffectCreative } from "swiper/modules";
 function CustomNavButtons() {
   const swiper = useSwiper();
   return (
-    <div className="absolute flex z-2 top-0 right-0">
+    <div className="absolute flex z-2 top-2 right-2">
       <button
         onClick={() => swiper.slidePrev()}
-        className="w-12 h-12 flex items-center justify-center"
+        className="w-12 h-12 flex items-center justify-center rounded-full bg-white"
       >
-        <FontAwesomeIcon icon={faArrowLeft} className="text-slate-400" />
+        <FontAwesomeIcon icon={faArrowLeft} className="text-blue-400" />
       </button>
+      <p>&nbsp;</p>
       <button
         onClick={() => swiper.slideNext()}
-        className="w-12 h-12 flex items-center justify-center"
+        className="w-12 h-12 flex items-center justify-center rounded-full bg-white"
       >
-        <FontAwesomeIcon icon={faArrowRight} className="text-slate-400" />
+        <FontAwesomeIcon icon={faArrowRight} className="text-blue-400" />
       </button>
     </div>
   );
@@ -35,25 +36,15 @@ export default function Swiper_Slider({ images }) {
       <Swiper
         rewind={true}
         zoom={true}
-        pagination={{ clickable: true }}
-        //navigation={true}
+        pagination={{ clickable: false }}
         modules={[Zoom, Pagination, Navigation, EffectCreative]}
         grabCursor={true}
-        // effect={"creative"}
-        // creativeEffect={{
-        //   prev: {
-        //     translate: ["0%", 0, 0],
-        //   },
-        //   next: {
-        //     translate: ["100%", 0, 0],
-        //   },
-        // }}
         className="md:h-[50vh]"
       >
         {images.map((img, idx) => (
         <SwiperSlide className="">
           <div className="swiper-zoom-container">
-            <img key={idx} src={img} alt={`Project ${idx}`}/>
+            <img key={idx} src={img} className="" alt={`Project ${idx}`}/>
           </div>
         </SwiperSlide>
         ))}
