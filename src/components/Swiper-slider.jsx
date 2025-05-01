@@ -12,17 +12,17 @@ import { Zoom, Navigation, Pagination, EffectCreative } from "swiper/modules";
 function CustomNavButtons() {
   const swiper = useSwiper();
   return (
-    <div className="absolute flex z-2 top-2 right-2">
+    <div className="absolute flex z-2 top-4 right-2">
       <button
         onClick={() => swiper.slidePrev()}
-        className="w-12 h-12 flex items-center justify-center rounded-full bg-white"
+        className="w-8 h-8 flex items-center justify-center rounded-full bg-white"
       >
         <FontAwesomeIcon icon={faArrowLeft} className="text-blue-400" />
       </button>
       <p>&nbsp;</p>
       <button
         onClick={() => swiper.slideNext()}
-        className="w-12 h-12 flex items-center justify-center rounded-full bg-white"
+        className="w-8 h-8 flex items-center justify-center rounded-full bg-white"
       >
         <FontAwesomeIcon icon={faArrowRight} className="text-blue-400" />
       </button>
@@ -32,7 +32,7 @@ function CustomNavButtons() {
 
 export default function Swiper_Slider({ images }) {
   return (
-    <section className="sticky bottom-60 md:bottom-20 md:h-[50vh]">
+    <section className="sticky bottom-60 md:bottom-20 md:h-[50vh] scroll-smooth">
       <Swiper
         rewind={true}
         zoom={true}

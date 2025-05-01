@@ -447,7 +447,7 @@ export default function ScrollAnimatedModel() {
         // Only render scene 2
         // handleDotsOnMouseMove(); // update dot positions if needed
         //renderer.clear();
-        renderer.render(scene2, camera2);
+        //renderer.render(scene2, camera2);
       }
     }
 
@@ -479,13 +479,13 @@ export default function ScrollAnimatedModel() {
       <video id="video2" src={video2} loop autoPlay muted playsInline style={{opacity:0, position:"absolute"}}></video>
       </div>
       <div className="w-full h-screen"></div>
-      <div className="relative flex w-full h-[500px] z-112 items-center justify-center">
-        {" "}
-        <p>check,</p>
-      </div>
-      <div className="relative flex w-full w-full h-[500px] z-112 items-center justify-center">
+      <div className="relative flex w-full h-[50vh] z-112 items-center justify-center">
         {" "}
         <p>Hello,</p>
+      </div>
+      <div className="relative flex w-full w-full h-[50vh] z-112 items-center justify-center">
+        {" "}
+        <p>Yaswanth here</p>
       </div>
     </>
   );

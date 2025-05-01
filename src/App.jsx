@@ -47,7 +47,7 @@ const project_docscope = {
     github: "https://github.com/yesh21/",
     live: "https://project-live-url.com"
   },
-  year : "2020"
+  year : "2024"
 };
 
 const project_clothing_store = {
@@ -59,7 +59,7 @@ const project_clothing_store = {
     github: "https://github.com/yesh21/",
     live: "https://project-live-url.com"
   },
-  year : "2020"
+  year : "2025"
 };
 
 const project_chrome_extension_llmscope = {
@@ -71,14 +71,14 @@ const project_chrome_extension_llmscope = {
     github: "https://github.com/yesh21/",
     live: "https://project-live-url.com"
   },
-  year : "2020"
+  year : "2024"
 };
 
 const project_movie_booking_site = {
   images : [p4img1, p4img2, p4img3, p4img4, p4img5],
-  name: "Old portfolio",
+  name: "Movie booking site",
   description: "A brief description of the awesome project.",
-  features: ["personal site"],
+  features: ["Flask", "User-login", "Email-auth", "Booking"],
   links: {
     github: "https://github.com/yesh21/",
     live: "https://project-live-url.com"
@@ -88,14 +88,14 @@ const project_movie_booking_site = {
 
 const project_old_portfolio = {
   images : [p5img1, p5img2, p5img3, p5img4, p5img5],
-  name: "Movie booking site",
+  name: "Old portfolio",
   description: "A brief description of the awesome project.",
-  features: ["Flask", "User Auth", "Email", "Booking"],
+  features: ["Personal-site", "Responsive", "GSAP.js"],
   links: {
     github: "https://github.com/yesh21/",
     live: "https://project-live-url.com"
   },
-  year : "2020"
+  year : "2022"
 };
 
 function App() {
