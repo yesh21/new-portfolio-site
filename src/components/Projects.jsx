@@ -6,8 +6,8 @@ const ProjectCard = () => {
     <div className="max-w-[1440px] h-full min-h-screen mx-auto px-4">
       <div className="flex flex-col md:flex-row border-t border-black/20 h-full justify-between">
         {/* Left image side */}
-        <div className="md:w-1/2  md:h-screen relative">
-        <div className='md:h-[50vh]'></div>
+        <div className="md:w-1/2  md:h-full relative">
+        <div className='md:h-[50vh] h-[25vh] sm:h-[25vh]'></div>
         <Swiper_Slider/>
           <div className="absolute bottom-2 left-2 text-white font-extrabold text-xs leading-none tracking-widest">
             TEXT

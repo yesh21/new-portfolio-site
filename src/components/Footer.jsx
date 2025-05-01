@@ -4,12 +4,12 @@ import logo from "../assets/logo.jpg"
 const Footer = () => {
   return (
     <>
-      <footer className="bg-[#18181a] text-[#f9f6e8] relative z-112 min-h-svh">
+      <footer className="bg-[#18181a] text-[#f9f6e8] relative flex flex-col justify-around z-112 min-h-svh">
         <div className="flex flex-col md:flex-row justify-around p-4 border-b border-zinc-700 mb-10">
           <div className="flex justify-between items-center font-bold text-3xl py-4">
             Yaswanth Pulavarthi
           </div>
-          <div className="flex space-x-4 max-w-full">
+          <div className="flex space-x-2 max-w-full">
             <a className="flex items-center space-x-1" href="#">
               <i className="fab fa-linkedin"></i>
               <span>LinkedIn</span>
@@ -26,7 +26,7 @@ const Footer = () => {
         </div>
 
         <main className="flex flex-col md:flex-row justify-evenly items-center w-full">
-          <nav className="flex flex-col space-y-12 text-3xl font-medium tracking-wide items-center">
+          <nav className="flex flex-col space-y-6 text-3xl font-medium tracking-wide items-center">
             <a className="hover:underline" href="#">
               Projects
             </a>
@@ -76,7 +76,7 @@ const Footer = () => {
             </form>
           </section>
         </main>
-        <div className="py-8 text-center">
+        <div className="py-2 text-center">
           <p className="text-gray-400">
             © Copyright 2025 Make in India. All Rights Reserved
           </p>

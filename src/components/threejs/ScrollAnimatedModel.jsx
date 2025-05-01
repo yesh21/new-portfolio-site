@@ -18,6 +18,7 @@ import {
 //import video1 from "../../assets/852292-hd_1728_1080_25fps.mp4"
 import video1 from "../../assets/220494_tiny.mp4"
 import video2 from "../../assets/5473981-hd_720_1366_25fps.mp4"
+import roomModelGLB from "../../assets/models/sci-fi_computer_room.glb?url" 
 
 
 export default function ScrollAnimatedModel() {
@@ -42,7 +43,7 @@ export default function ScrollAnimatedModel() {
     );
     const lerpAmount = 0.01;
     const camera1ScrollYEnd = 2100;
-    const scene1ScrollYEnd = camera1ScrollYEnd + window.innerHeight + 700;
+    const scene1ScrollYEnd = camera1ScrollYEnd + window.innerHeight + windowHalfY;
     const rotationSpeed = 0.00002;
 
     let glitchPass = new GlitchPass();
@@ -151,6 +152,7 @@ export default function ScrollAnimatedModel() {
           await sleep(30); // small delay before next mesh
         }
 
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 
         const desktopMonitorCanvas = document.createElement("canvas");
         const desktopMonitorCtx = desktopMonitorCanvas.getContext("2d");
@@ -221,7 +223,7 @@ export default function ScrollAnimatedModel() {
       }
 
       // Usage example:
-      loadAndShowModelSequentially("/models/sci-fi_computer_room.glb", scene)
+      loadAndShowModelSequentially(roomModelGLB, scene)
         .then(() => {
           console.log("All meshes loaded and revealed!");
         })
@@ -426,20 +428,21 @@ export default function ScrollAnimatedModel() {
         hBlur.enabled = false;
       } else if (window.scrollY < camera1ScrollYEnd + windowHalfY+ windowHalfY) {
         window.scrollBy({
-          top: 4,
+          top: 1,
           behavior: 'auto' // Required for manual control of smoothness
         });
         camera.quaternion.slerp(targetQuaternion, lerpAmount*2);
 
         // for mobile view scrolling into vertical desktop
         if (mobileView) {
-          camera.rotation.y = updateMobileCameraRotation; //0.193154851 //or -6.1
+          camera.rotation.y = updateMobileCameraRotation; //upto 0.193154851 //or -6.1
         }
 
         hBlur.enabled = false; //hblur before render helps in stopping the blur effect
         composer.render();
       } else if (window.scrollY < scene1ScrollYEnd) {
         //composer.render();
+        renderer.clear();
       } else {
         // Only render scene 2
         // handleDotsOnMouseMove(); // update dot positions if needed
@@ -468,10 +471,13 @@ export default function ScrollAnimatedModel() {
   return (
     <>
       <canvas
-        className="w-full h-lvh fixed top-0"
+        className="w-full h-lvh min-h-screen fixed top-0"
         id="room-setup-canvas"
       ></canvas>
-      <div className="w-full h-[2100px]"></div>
+      <div className="w-full h-[2100px]">
+      <video id="video" src={video1} loop autoPlay muted playsInline style={{opacity:0, position:"absolute"}}></video>
+      <video id="video2" src={video2} loop autoPlay muted playsInline style={{opacity:0, position:"absolute"}}></video>
+      </div>
       <div className="w-full h-screen"></div>
       <div className="relative flex w-full h-[500px] z-112 items-center justify-center">
         {" "}
@@ -480,9 +486,6 @@ export default function ScrollAnimatedModel() {
       <div className="relative flex w-full w-full h-[500px] z-112 items-center justify-center">
         {" "}
         <p>Hello,</p>
-        <video id="video" src={video1} loop autoPlay muted playsInline style={{opacity:0, position:"absolute"}}></video>
-        <video id="video2" src={video2} loop autoPlay muted playsInline style={{opacity:0, position:"absolute"}}></video>
-
       </div>
     </>
   );
