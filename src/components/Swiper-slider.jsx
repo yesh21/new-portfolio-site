@@ -48,8 +48,9 @@ export default function Swiper_Slider({ images }) {
           </div>
         </SwiperSlide>
         ))}
-        <CustomNavButtons />
+        
       </Swiper>
+      <CustomNavButtons />
     </section>
   );
 }

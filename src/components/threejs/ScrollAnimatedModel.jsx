@@ -152,7 +152,7 @@ export default function ScrollAnimatedModel() {
           await sleep(30); // small delay before next mesh
         }
 
-        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+        renderer.setSize(window.innerWidth, window.innerHeight);
 
         const desktopMonitorCanvas = document.createElement("canvas");
         const desktopMonitorCtx = desktopMonitorCanvas.getContext("2d");
@@ -293,7 +293,7 @@ export default function ScrollAnimatedModel() {
       } else {
         mobileView = false;
       }
-      if (!mobileView) {
+      if (!mobileView || (canvas.clientWidth != window.innerWidth)) {
         camera.aspect = windowHalfX / windowHalfY;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);

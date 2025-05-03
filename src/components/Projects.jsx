@@ -6,11 +6,11 @@ import { faSquareArrowUpRight } from '@fortawesome/free-solid-svg-icons';
 
 const ProjectCard = ({ images, name, features, links, year }) => {
   return (
-    <div className="max-w-[1440px] h-full min-h-screen mx-auto px-4">
-      <div className="flex flex-col md:flex-row border-t-2 border-black/60 min-h-screen justify-start">
+    <div className="max-w-[1440px] w-full h-screen mx-auto px-4 parallax-slide backdrop-blur-[45px]">
+      <div className="flex flex-col md:flex-row border-t-2 border-black/60 min-h-screen justify-center md:items-center lg:items-center parallax-background">
         {/* Left image side */}
         <div className="md:w-1/2  md:h-full relative">
-        <div className='md:h-[50vh] h-[25vh] sm:h-[25vh]'></div>
+        {/* <div className='md:h-[50vh] h-[25vh] sm:h-[25vh]'></div> */}
         <Swiper_Slider images={images}/>
           <div className="absolute bottom-2 left-2 text-white font-extrabold text-xs leading-none tracking-widest">
           {year}
@@ -20,7 +20,7 @@ const ProjectCard = ({ images, name, features, links, year }) => {
           </div>
         </div>
         <div className="md:w-1/2">
-        <div className="flex flex-col justify-center h-full p-6 relative backdrop-blur-[2px]">
+        <div className="flex flex-col justify-center h-full p-6 relative">
 
           <h1 className="text-[2.5rem] uppercase leading-[1.1] font-bold max-w-[400px]">
             {name}
