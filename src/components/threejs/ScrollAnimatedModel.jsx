@@ -16,10 +16,9 @@ import {
   CSS2DObject,
 } from "three/examples/jsm/renderers/CSS2DRenderer.js";
 //import video1 from "../../assets/852292-hd_1728_1080_25fps.mp4"
-import video1 from "../../assets/220494_tiny.mp4"
-import video2 from "../../assets/5473981-hd_720_1366_25fps.mp4"
-import roomModelGLB from "../../assets/models/sci-fi_computer_room.glb?url" 
-
+import video1 from "../../assets/220494_tiny.mp4";
+import video2 from "../../assets/5473981-hd_720_1366_25fps.mp4";
+import roomModelGLB from "../../assets/models/sci-fi_computer_room.glb?url";
 
 export default function ScrollAnimatedModel() {
   useEffect(() => {
@@ -43,7 +42,8 @@ export default function ScrollAnimatedModel() {
     );
     const lerpAmount = 0.01;
     const camera1ScrollYEnd = 2100;
-    const scene1ScrollYEnd = camera1ScrollYEnd + window.innerHeight + windowHalfY;
+    const scene1ScrollYEnd =
+      camera1ScrollYEnd + window.innerHeight + windowHalfY;
     const rotationSpeed = 0.00002;
 
     let glitchPass = new GlitchPass();
@@ -158,42 +158,57 @@ export default function ScrollAnimatedModel() {
         const desktopMonitorCtx = desktopMonitorCanvas.getContext("2d");
         desktopMonitorCtx.fillStyle = "white";
         desktopMonitorCtx.font = "1.2rem Fira Code Variable";
-  
-        var desktopMonitorText = desktopMonitorCtx.measureText("<>Yaswanth Pulavarthi</>");
+
+        var desktopMonitorText = desktopMonitorCtx.measureText(
+          "<>Yaswanth Pulavarthi</>"
+        );
         var x = (desktopMonitorCanvas.width - desktopMonitorText.width) * 0.5;
         desktopMonitorCtx.fillText("<>Yaswanth Pulavarthi</>", x, 70);
-        var desktopMonitorText = desktopMonitorCtx.measureText("Welcome to my site");
+        var desktopMonitorText =
+          desktopMonitorCtx.measureText("Welcome to my site");
         desktopMonitorCtx.fillStyle = "gray";
         var x = (desktopMonitorCanvas.width - desktopMonitorText.width) * 0.5;
-        desktopMonitorCtx.fillText("Welcome to my site", x, 70+desktopMonitorText.actualBoundingBoxAscent + desktopMonitorText.actualBoundingBoxDescent+ 3);
-  
+        desktopMonitorCtx.fillText(
+          "Welcome to my site",
+          x,
+          70 +
+            desktopMonitorText.actualBoundingBoxAscent +
+            desktopMonitorText.actualBoundingBoxDescent +
+            3
+        );
+
         //ctx.clearRect(0, 0, canvas.width, canvas.height);
         desktopMonitorCtx.textAlign = "center";
         desktopMonitorCtx.textBaseline = "middle";
-  
-        const desktopMonitorTexture = new THREE.CanvasTexture(desktopMonitorCanvas);
-  
-  
-        const video = document.getElementById('video');
+
+        const desktopMonitorTexture = new THREE.CanvasTexture(
+          desktopMonitorCanvas
+        );
+
+        const video = document.getElementById("video");
         video.play(); // Ensure the video is playing
-  
+
         const videoTexture = new THREE.VideoTexture(video);
-  
-  
-        const desktopMonitorMeshGeometry = new THREE.PlaneGeometry(5.1 / 9, 4.5 / 16); // Match video aspect ratio
+
+        const desktopMonitorMeshGeometry = new THREE.PlaneGeometry(
+          5.1 / 9,
+          4.5 / 16
+        ); // Match video aspect ratio
         const desktopMonitorMeshMaterial = new THREE.MeshBasicMaterial({
           //color: 0x18181a,
-          map: videoTexture//desktopMonitorTexture,
+          map: videoTexture, //desktopMonitorTexture,
         });
-        const desktopMonitorMesh = new THREE.Mesh(desktopMonitorMeshGeometry, desktopMonitorMeshMaterial);
+        const desktopMonitorMesh = new THREE.Mesh(
+          desktopMonitorMeshGeometry,
+          desktopMonitorMeshMaterial
+        );
         desktopMonitorMesh.position.set(-0.45, 0.115, 0.085);
         scene.add(desktopMonitorMesh);
-  
-  
+
         const width = 4.25 / 16;
         const height = 3.8 / 9;
         const cornerRadius = 0.02; // Adjust corner cut size
-  
+
         const shape = new THREE.Shape()
           .moveTo(-width / 2 + cornerRadius, -height / 2)
           .lineTo(width / 2 - cornerRadius, -height / 2)
@@ -204,17 +219,17 @@ export default function ScrollAnimatedModel() {
           .lineTo(-width / 2, height / 2 - cornerRadius) // Bottom-left cut
           .lineTo(-width / 2, -height / 2 + cornerRadius)
           .lineTo(-width / 2 + cornerRadius, -height / 2); // Top-left cut
-  
-          const video2 = document.getElementById('video2');
-          video2.play(); // Ensure the video is playing
-    
-          const videoTexture2 = new THREE.VideoTexture(video2);
+
+        const video2 = document.getElementById("video2");
+        video2.play(); // Ensure the video is playing
+
+        const videoTexture2 = new THREE.VideoTexture(video2);
         // 2. Convert to geometry
         //const geometry1 = new THREE.ShapeGeometry(shape);
         const geometry1 = new THREE.PlaneGeometry(4.2 / 16, 3.8 / 9); // Match video aspect ratio
-  
+
         const material1 = new THREE.MeshBasicMaterial({
-          map: videoTexture2
+          map: videoTexture2,
         });
         const mobileMonitorMesh = new THREE.Mesh(geometry1, material1);
         mobileMonitorMesh.position.set(-0.99, 0.1092, 0.1);
@@ -228,7 +243,6 @@ export default function ScrollAnimatedModel() {
           console.log("All meshes loaded and revealed!");
         })
         .catch(console.error);
-
 
       // Postprocessing composer
       composer = new EffectComposer(renderer);
@@ -293,7 +307,7 @@ export default function ScrollAnimatedModel() {
       } else {
         mobileView = false;
       }
-      if (!mobileView || (canvas.clientWidth != window.innerWidth)) {
+      if (!mobileView || canvas.clientWidth != window.innerWidth) {
         camera.aspect = windowHalfX / windowHalfY;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -336,14 +350,14 @@ export default function ScrollAnimatedModel() {
     };
 
     // Mouse move handler
-    function onMouseMove(event) {  
+    function onMouseMove(event) {
       // for scene 1
       if (window.scrollY < camera1ScrollYEnd) {
         window.scrollBy({
           top: 3,
-          behavior: 'auto' // Required for manual control of smoothness
+          behavior: "auto", // Required for manual control of smoothness
         });
-        
+
         const deltaMove = {
           x: event.clientX - windowHalfX,
           y: event.clientY - windowHalfY,
@@ -426,12 +440,15 @@ export default function ScrollAnimatedModel() {
 
         composer.render();
         hBlur.enabled = false;
-      } else if (window.scrollY < camera1ScrollYEnd + windowHalfY+ windowHalfY) {
+      } else if (
+        window.scrollY <
+        camera1ScrollYEnd + windowHalfY + windowHalfY
+      ) {
         window.scrollBy({
           top: 1,
-          behavior: 'auto' // Required for manual control of smoothness
+          behavior: "auto", // Required for manual control of smoothness
         });
-        camera.quaternion.slerp(targetQuaternion, lerpAmount*2);
+        camera.quaternion.slerp(targetQuaternion, lerpAmount * 2);
 
         // for mobile view scrolling into vertical desktop
         if (mobileView) {
@@ -475,17 +492,49 @@ export default function ScrollAnimatedModel() {
         id="room-setup-canvas"
       ></canvas>
       <div className="w-full h-[2100px]">
-      <video id="video" src={video1} loop autoPlay muted playsInline style={{opacity:0, position:"absolute"}}></video>
-      <video id="video2" src={video2} loop autoPlay muted playsInline style={{opacity:0, position:"absolute"}}></video>
+        <video
+          id="video"
+          src={video1}
+          loop
+          autoPlay
+          muted
+          playsInline
+          style={{ opacity: 0, position: "absolute" }}
+        ></video>
+        <video
+          id="video2"
+          src={video2}
+          loop
+          autoPlay
+          muted
+          playsInline
+          style={{ opacity: 0, position: "absolute" }}
+        ></video>
       </div>
       <div className="w-full h-screen"></div>
       <div className="relative flex w-full h-[50vh] z-112 items-center justify-center">
         {" "}
-        <p>Hello,</p>
+        <h1 className="text-[2.5rem] leading-[1.1] font-bold max-w-[400px]">
+          Hello,
+        </h1>
       </div>
-      <div className="relative flex w-full w-full h-[50vh] z-112 items-center justify-center">
-        {" "}
-        <p>Yaswanth here</p>
+      <div className="relative flex w-full h-[50vh] z-112 items-center justify-center">
+      <div className="w-1/2">
+        <div class="ml-12 mx-auto text-2xl flex flex-wrap gap-2">
+          <span class="text-gray-400">&lt;</span>
+          <span class="text-blue-400">div</span>
+          <span class="text-blue-200">className</span>
+          <span class="">=</span>
+          <span class="text-orange-400">"Name"</span>
+          <span class="text-gray-400">&gt;</span>
+        </div>
+        <h1 className="ml-12 text-3xl text-center border-l">Yaswanth here</h1>
+        <div class="ml-12 text-2xl flex flex-wrap gap-2">
+          <span class="text-gray-400">&lt;</span>
+          <span class="text-blue-400">/div</span>
+          <span class="text-gray-400 border-r animate-pulse">&gt;</span>
+        </div>
+        </div>
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import ProjectCard from "./Projects";
+import ProjectCard from "./ProjectCard";
 import { useEffect } from "react";
 
 import p1img1 from '../assets/projects/docscope/screenshot_1.png';
@@ -32,7 +32,10 @@ import p5img5 from '../assets/projects/old_portfolio/screenshot_5.png';
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { faSquareArrowUpRight } from '@fortawesome/free-solid-svg-icons';
+import { SplitText } from "gsap/SplitText"; // Ensure SplitText is installed and imported
 
+gsap.registerPlugin(SplitText);
 gsap.registerPlugin(ScrollTrigger);
 
 
@@ -42,10 +45,7 @@ const project_docscope = {
   name: "Docscope",
   description: "A brief description of the awesome project.",
   features: ["OpenLLMs", "Langchain", "RAG", "Streamlit"],
-  links: {
-    github: "https://github.com/yesh21/",
-    live: "https://project-live-url.com"
-  },
+  github_link: "https://github.com/yesh21/DocScope",
   year : "2024"
 };
 
@@ -54,10 +54,7 @@ const project_clothing_store = {
   name: "Clothing store",
   description: "A brief description of the awesome project.",
   features: ["Django", "Tailwind", "User-auth", "Payment-gateway"],
-  links: {
-    github: "https://github.com/yesh21/",
-    live: "https://project-live-url.com"
-  },
+  github_link: "https://github.com/yesh21/clothing_store_django",
   year : "2025"
 };
 
@@ -66,10 +63,7 @@ const project_chrome_extension_llmscope = {
   name: "Chrome extension LLMscope",
   description: "A brief description of the awesome project.",
   features: ["OpenLLMs", "Langchain", "RAG", "Streamlit", "Fast-api"],
-  links: {
-    github: "https://github.com/yesh21/",
-    live: "https://project-live-url.com"
-  },
+  github_link: "https://github.com/yesh21/chrome_extension_llmscope",
   year : "2024"
 };
 
@@ -78,10 +72,7 @@ const project_movie_booking_site = {
   name: "Movie booking site",
   description: "A brief description of the awesome project.",
   features: ["Flask", "User-login", "Email-auth", "Booking"],
-  links: {
-    github: "https://github.com/yesh21/",
-    live: "https://project-live-url.com"
-  },
+  github_link: "https://github.com/yesh21/MovieBookingSystem",
   year : "2020"
 };
 
@@ -90,10 +81,7 @@ const project_old_portfolio = {
   name: "Old portfolio",
   description: "A brief description of the awesome project.",
   features: ["Personal-site", "Responsive", "GSAP.js"],
-  links: {
-    github: "https://github.com/yesh21/",
-    live: "https://project-live-url.com"
-  },
+  github_link: "https://github.com/yesh21/yesh21.github.io",
   year : "2022"
 };
 
@@ -101,26 +89,58 @@ const project_old_portfolio = {
 const ProjectsContainer = () => {
 
     useEffect(() => {
+      
         const container = document.getElementById('parallax-container');
         if (!container) return; // Safety check
 
-        const Stl = gsap.timeline({
+        const slides = container.querySelectorAll('.parallax-slide');
+
+        const timeline = gsap.timeline({
                 scrollTrigger: {
                     trigger: '#parallax-container',
                     pin: true,
                     start: 'top top',
                     end: 'bottom bottom',
                     scrub: 1,
+                    //markers: true,
                     ease: 'power2.in',
                     pinSpacing:false
                     }
                 })
-                Stl.to('.parallax-slide', {
-                    marginBottom: '-100vh',
-                    stagger: .5,
-                }, '<')
-        
-                // Cleanup
+                let offsets = [0];
+
+                for (let i = 1; i < slides.length; i++) {
+                  offsets[i] = offsets[i - 1] + slides[i - 1].offsetHeight;
+                }
+                //console.log(offsets)
+                slides.forEach((slide, i) => {
+                  
+                  timeline    
+                  .call(() => {
+                    // This runs before the .to() animation for this slide
+                    slide.style.overflowY = 'auto';
+                  }, null, i * 0.5)
+                  .to(slide, {
+                    y: -offsets[i],
+                    //marginBottom: -"100vh",
+                    onStart: function() {
+                      slide.style.overflowY = 'auto';
+                    },
+                    onComplete: function() {
+                      slide.style.overflowY = 'hidden';
+                    },
+                    onReverseComplete: function() {
+                      slide.style.overflowY = 'auto';
+                    },
+                    onReverseStart: function() {
+                      slide.style.overflowY = 'hidden';
+                    }
+
+                  },  0.5); // adjust stagger as needed
+                  
+                });
+                
+        // Cleanup
         return () => {
           ScrollTrigger.getAll().forEach(trigger => trigger.kill());
         };
@@ -129,7 +149,7 @@ const ProjectsContainer = () => {
       
 
     return (     
-
+    <>
     <div id="parallax-container" className="flex flex-col items-center overflow-x-hidden">
         <ProjectCard {...project_docscope} />
         <ProjectCard {...project_clothing_store} />
@@ -137,6 +157,8 @@ const ProjectsContainer = () => {
         <ProjectCard {...project_movie_booking_site} />
         <ProjectCard {...project_old_portfolio} />
         </div>
+        </>
+
 );
 }
 

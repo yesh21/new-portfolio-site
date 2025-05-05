@@ -47,16 +47,16 @@ const SystemInfo = () => {
   return (
     <>
 
-    {batteryLevel !== null && batteryLevel < 61 && isCharging === false && (
+    {batteryLevel !== null && batteryLevel < 20 && isCharging === false && (
         <div className='fixed z-111 top-0 w-full h-screen text-2xl text-red-700 font-semibold text-center danger-edges'>
           <br></br>
-          &nbsp;⚡ Low battery!! 🔋 Charge your device &nbsp;
+          &nbsp;⚡ Your device battery is low!! 🔋 Charge your device &nbsp;
         </div>
         
     )}
 
 
-    <div className='fixed flex flex-col bottom-2 left-2 z-111 text-[0.70rem]'>
+    <div className='fixed flex flex-col bottom-2 left-2 z-111 text-sm'>
         <span>Battery:
         <span id="battery-percentage">{batteryLevel}%</span>
         </span>

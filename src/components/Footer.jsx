@@ -10,11 +10,11 @@ const Footer = () => {
             Yaswanth Pulavarthi
           </div>
           <div className="flex space-x-2 max-w-full">
-            <a className="flex items-center space-x-1" href="#">
+            <a className="flex items-center space-x-1" href="https://www.linkedin.com/in/yaswanth-pulavarthi-447796195/"  target="_blank">
               <i className="fab fa-linkedin"></i>
               <span>LinkedIn</span>
             </a>
-            <a className="flex items-center space-x-1" href="#">
+            <a className="flex items-center space-x-1" href="https://github.com/yesh21/" target="_blank">
               <i className="fab fa-github"></i>
               <span>Github</span>
             </a>
@@ -27,7 +27,7 @@ const Footer = () => {
 
         <main className="flex flex-col md:flex-row justify-evenly items-center w-full">
           <nav className="flex flex-col space-y-6 text-3xl font-medium tracking-wide items-center">
-            <a className="hover:underline" href="#">
+            <a className="hover:underline" href="https://github.com/yesh21/">
               Projects
             </a>
             <a className="hover:underline" href="#">
