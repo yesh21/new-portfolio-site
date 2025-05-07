@@ -512,12 +512,6 @@ export default function ScrollAnimatedModel() {
         ></video>
       </div>
       <div className="w-full h-screen"></div>
-      <div className="relative flex w-full h-[100vh] z-112 items-center justify-center mix-blend-exclusion bg-[#87bfd5]">
-        {" "}
-        <h1 className="text-[2.5rem] leading-[1.1] font-bold max-w-[400px] italic mix-blend-difference">
-          Hello,
-        </h1>
-      </div>
     </>
   );
 }

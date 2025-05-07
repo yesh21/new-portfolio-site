@@ -7,7 +7,7 @@ import { faSquareArrowUpRight } from '@fortawesome/free-solid-svg-icons';
 const ProjectCard = ({ images, name, description, features, github_link, year }) => {
   return (
     <div className="scroll-wrapper flex h-[100vh] w-screen backdrop-blur-[45px]">
-      <div className="flex flex-col min-w-[100vw] px-4 h-full min-h-screen md:flex-row border-t-2 border-r-2 border-black/60 justify-center md:items-center lg:items-center parallax-background">
+      <div className="flex flex-col min-w-[100vw] px-4 py-12 h-full min-h-screen md:flex-row border-t-2 border-r-2 border-black/60 md:justify-center md:items-center lg:items-center parallax-background">
         {/* Left image side */}
         <div className="md:w-1/2 relative">
         {/* <div className='md:h-[50vh] h-[25vh] sm:h-[25vh]'></div> */}

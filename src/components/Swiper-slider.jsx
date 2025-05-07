@@ -44,7 +44,7 @@ export default function Swiper_Slider({ images }) {
         //navigation={true}
         modules={[Zoom, Pagination, Navigation, EffectCreative]}
         grabCursor={true}
-        className="md:h-[50vh]"
+        className="md:h-[50vh] h-[30vh]"
       >
         {images.map((img, idx) => (
           <SwiperSlide className="">
