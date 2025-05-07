@@ -410,12 +410,12 @@ export default function ScrollAnimatedModel() {
       } else if (window.scrollY < scene1ScrollYEnd) {
         glitchPass.enabled = false;
         showSecondScene = false;
-        document.body.style.backgroundColor = "#18181a";
-        document.body.style.color = "#ffffff";
+        // document.body.style.backgroundColor = "#18181a";
+        // document.body.style.color = "#ffffff";
       } else {
         showSecondScene = true;
-        document.body.style.backgroundColor = "#f7f5e8";
-        document.body.style.color = "#000000";
+        //document.body.style.backgroundColor = "#f7f5e8";
+        //document.body.style.color = "#000000";
         // Optionally remove event listener if no longer needed
         // window.removeEventListener('scroll', onScroll);
       }
@@ -512,29 +512,11 @@ export default function ScrollAnimatedModel() {
         ></video>
       </div>
       <div className="w-full h-screen"></div>
-      <div className="relative flex w-full h-[50vh] z-112 items-center justify-center">
+      <div className="relative flex w-full h-[100vh] z-112 items-center justify-center mix-blend-exclusion bg-[#87bfd5]">
         {" "}
-        <h1 className="text-[2.5rem] leading-[1.1] font-bold max-w-[400px]">
+        <h1 className="text-[2.5rem] leading-[1.1] font-bold max-w-[400px] italic mix-blend-difference">
           Hello,
         </h1>
-      </div>
-      <div className="relative flex w-full h-[50vh] z-112 items-center justify-center">
-      <div className="w-1/2">
-        <div class="ml-12 mx-auto text-2xl flex flex-wrap gap-2">
-          <span class="text-gray-400">&lt;</span>
-          <span class="text-blue-400">div</span>
-          <span class="text-blue-200">className</span>
-          <span class="">=</span>
-          <span class="text-orange-400">"Name"</span>
-          <span class="text-gray-400">&gt;</span>
-        </div>
-        <h1 className="ml-12 text-3xl text-center border-l">Yaswanth here</h1>
-        <div class="ml-12 text-2xl flex flex-wrap gap-2">
-          <span class="text-gray-400">&lt;</span>
-          <span class="text-blue-400">/div</span>
-          <span class="text-gray-400 border-r animate-pulse">&gt;</span>
-        </div>
-        </div>
       </div>
     </>
   );

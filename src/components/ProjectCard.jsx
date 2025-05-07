@@ -6,10 +6,10 @@ import { faSquareArrowUpRight } from '@fortawesome/free-solid-svg-icons';
 
 const ProjectCard = ({ images, name, description, features, github_link, year }) => {
   return (
-    <div className="max-w-[1440px] w-full min-h-screen mx-auto px-4 parallax-slide backdrop-blur-[45px]">
-      <div className="flex flex-col md:flex-row border-t-2 border-black/60 min-h-screen justify-center md:items-center lg:items-center parallax-background">
+    <div className="scroll-wrapper flex h-[100vh] w-screen backdrop-blur-[45px]">
+      <div className="flex flex-col min-w-[100vw] px-4 h-full min-h-screen md:flex-row border-t-2 border-r-2 border-black/60 justify-center md:items-center lg:items-center parallax-background">
         {/* Left image side */}
-        <div className="md:w-1/2  md:h-full relative">
+        <div className="md:w-1/2 relative">
         {/* <div className='md:h-[50vh] h-[25vh] sm:h-[25vh]'></div> */}
         <Swiper_Slider images={images}/>
           <div className="absolute bottom-2 left-2 text-white font-extrabold text-xs leading-none tracking-widest">
@@ -21,13 +21,12 @@ const ProjectCard = ({ images, name, description, features, github_link, year })
         </div>
         <div className="md:w-1/2">
         <div className="flex flex-col justify-center h-full p-6 relative">
-
-          <h1 className="text-[2.5rem] uppercase leading-[1.1] font-bold max-w-[400px]">
+          <h1 className="text-[2.5rem] uppercase leading-[1.1] font-bold max-w-[400px] splitgsap">
             {name}
           </h1>
 
           <a className="mt-10 flex items-center space-x-2 text-md" href={github_link} target="_blank">
-            <span>View project</span>
+            <span className=''>View project</span>
             <div
               aria-label="View project"
               className="flex items-center justify-center"
@@ -37,10 +36,10 @@ const ProjectCard = ({ images, name, description, features, github_link, year })
           </a>
           <div className="mt-10 space-y-6 text-xs max-w-[400px]">
             <div>
-              <div className="font-semibold uppercase tracking-widest text-black/80">
+              <div className="font-semibold uppercase tracking-widest text-black/80 splitgsap">
               description
               </div>
-              <div className="text-black/40 font-semibold">{description}</div>
+              <div className="text-black/40 font-semibold splitgsap">{description}</div>
             </div>
             <div>
               <div className="font-extrabold text-md uppercase tracking-widest text-black/80">
@@ -49,7 +48,7 @@ const ProjectCard = ({ images, name, description, features, github_link, year })
               <div className="text-black/60 text-md">
               <ul class="flex flex-wrap gap-2 text-xs text-black-600">
               {features.map((item, i) => (
-                <li key ={i} class="bg-indigo-100 px-2 py-1 rounded ">{item}</li>
+                <li key ={i} class="bg-indigo-100 px-2 py-1 rounded">{item}</li>
               ))}
               </ul>
               </div>
