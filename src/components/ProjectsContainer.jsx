@@ -166,7 +166,7 @@ const ProjectsContainer = () => {
 
   return (
     <>
-      <div className="parallax-container w-screen h-screen flex items-center justify-start overflow-hidden">
+      <div id="projects" className="parallax-container w-screen h-screen flex items-center justify-start overflow-hidden">
         <ProjectCard {...project_docscope} />
         <ProjectCard {...project_clothing_store} />
         <ProjectCard {...project_chrome_extension_llmscope} />
