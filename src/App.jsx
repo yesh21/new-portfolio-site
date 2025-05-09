@@ -11,6 +11,7 @@ import Loader from "./components/Loader";
 // import model from "./assets/models/sci-fi_computer_room.glb"
 import ScrollReveal from "./components/SticksReveal";
 import MatterWords from "./components/MatterJSwords";
+import Header from "./components/Header";
 
 const preloadAssets = (assetList) =>
   Promise.all(assetList.map((src) => preloadImage(src)));
@@ -39,23 +40,7 @@ function App() {
       {isLoaded ? (
         <>
           {loaded && <FadingPixels />}
-          <header class="fixed w-full z-50 backdrop-blur-xs">
-            <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 md:py-4">
-              <div class="text-xl font-medium antialiased  mix-blend-difference italic">YP</div>
-              <nav class="flex space-x-6">
-                <a href="#about" class="text-gray-400 hover:text-blue-400">
-                  About
-                </a>
-                <a href="#projects" class="text-gray-500 hover:text-blue-500">
-                  Projects
-                </a>
-                <a href="#footer" class="text-gray-600 hover:text-blue-600">
-                  Contact
-                </a>
-              </nav>
-            </div>
-          </header>
-
+          <Header />
           <ScrollSuggestion />
           <ScrollAnimatedModel />
           <SystemInfo />

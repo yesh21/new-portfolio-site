@@ -219,8 +219,14 @@ export default function MatterWords() {
           /* your enter code */
           //setRunning(true);
           document.getElementById("words-container").style.visibility = "hidden";
+          const canvasRect = canvas.getBoundingClientRect();
 
-          wordBodies.forEach(body => {
+          wordBodies.forEach((body, i) => {
+            const rect = spanEls[i].getBoundingClientRect();
+            const newX = rect.left - canvasRect.left + rect.width / 2;
+            const newY = rect.top - canvasRect.top + rect.height / 2;
+      
+            Matter.Body.setPosition(body, { x: newX, y: newY }, true);
             Matter.Body.setVelocity(body, { x: (Math.random() - 0.5) * 20, y: (Math.random() - 0.5) * 20 });
           });        
           Matter.Render.run(render);

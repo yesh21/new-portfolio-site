@@ -72,12 +72,6 @@ const ScrollReveal = () => {
 
   return (
     <>
-    {/* <div className="relative flex w-full h-[100vh] z-11 items-center justify-center mix-blend-exclusion bg-[#87bfd5]">
-    {" "}
-    <h1 id="about" className="text-[2.5rem] leading-[1.1] font-bold max-w-[400px] p-6 italic mix-blend-difference">
-      Hello, My everyday browser history is filled with googling 100s of syntax errors, and "how..??" and "can..??"
-    </h1>
-  </div> */}
   <div>
     <div
       className="reveal-section relative h-[50vh]"
