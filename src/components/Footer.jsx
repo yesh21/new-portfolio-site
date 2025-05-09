@@ -1,10 +1,41 @@
 import logo from "../assets/logo.jpg"
+import React, { useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 
 const Footer = () => {
+
+  useEffect(() => {
+    // Create the animation and store the ScrollTrigger instance
+    const animation = gsap.fromTo(
+      "#footer",
+      { yPercent: -50,  },
+      {
+        yPercent: 0,
+        xPercent: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#footer",
+          start: "top center",
+          end: "top top",
+          scrub: true,
+          //markers: true,
+        },
+      }
+    );
+  
+    // Cleanup function to kill only this ScrollTrigger instance
+    return () => {
+      if (animation.scrollTrigger) {
+        animation.scrollTrigger.kill();
+      }
+    };
+  }, []);
+  
   return (
     <>
-      <footer id="footer" className="bg-[#18181a] text-[#f9f6e8] relative flex flex-col justify-around z-112 min-h-svh">
+      <footer id="footer" className="bg-[#18181a] text-[#f9f6e8] relative flex flex-col justify-around -z-1 min-h-[93svh]">
         <div className="flex flex-col md:flex-row justify-around p-4 border-b border-zinc-700 mb-10">
           <div className="flex justify-between items-center font-bold text-3xl py-4">
             Yaswanth Pulavarthi
@@ -25,16 +56,13 @@ const Footer = () => {
           </div>
         </div>
 
-        <main className="flex flex-col md:flex-row justify-evenly items-center w-full">
+        <main className="flex flex-col md:flex-row justify-center md:justify-evenly items-center w-full">
           <nav className="flex flex-col space-y-6 text-3xl font-medium tracking-wide items-center">
             <a className="hover:underline" href="https://github.com/yesh21/">
               Projects
             </a>
             <a className="hover:underline" href="#">
               About
-            </a>
-            <a className="hover:underline" href="#">
-              Contact
             </a>
             <div className="mt-auto w-28">
               <img
@@ -50,7 +78,7 @@ const Footer = () => {
               <p className="mb-6">
                 Let’s connect.
                 <a className="underline" href="mailto:example@domain.com">
-                  example@domain.com
+                  yaswanth@gmail.com
                 </a>
               </p>
             </div>
@@ -77,7 +105,7 @@ const Footer = () => {
           </section>
         </main>
         <div className="py-2 text-center">
-          <p className="text-gray-400">
+          <p className="text-gray-400 text-xs">
             © Copyright 2025 Make in India. All Rights Reserved
           </p>
         </div>

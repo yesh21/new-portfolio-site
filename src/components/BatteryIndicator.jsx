@@ -63,7 +63,7 @@ const SystemInfo = () => {
         
         <span
           id="battery-charging"
-          className={isCharging === false ? '' : 'text-green-300'}
+          className={isCharging === false ? '' : 'text-green-500'}
         >
           Charging: {isCharging === null ? '--' : isCharging ? 'Yes' : 'No'}
         </span>

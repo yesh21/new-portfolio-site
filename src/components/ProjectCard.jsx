@@ -36,10 +36,10 @@ const ProjectCard = ({ images, name, description, features, github_link, year })
           </a>
           <div className="mt-10 space-y-6 text-xs max-w-[400px]">
             <div>
-              <div className="font-semibold uppercase tracking-widest text-black/80 splitgsap">
+              <div className="font-semibold uppercase tracking-widest text-black/80">
               description
               </div>
-              <div className="text-black/40 font-semibold splitgsap">{description}</div>
+              <div className="text-black/40 font-semibold">{description}</div>
             </div>
             <div>
               <div className="font-extrabold text-md uppercase tracking-widest text-black/80">

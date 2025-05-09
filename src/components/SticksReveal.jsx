@@ -18,8 +18,10 @@ const ScrollReveal = () => {
           // document.body.style.backgroundColor = "#18181a"; // Dark gray/black
           // document.body.style.color = "#ffffff"; // Light gray/white text
           document.querySelectorAll(".cover").forEach(function (element) {
-            element.style.backgroundColor = "#d4f1be";
-            element.style.color = "#2f4f2f";
+            element.style.backgroundColor = "#794654";
+            element.style.color = "#81b7aa";
+            element.classList.add("border-r");
+
           });
           document.querySelector(".revealed-content").style.display = 'flex';
         },
@@ -28,8 +30,8 @@ const ScrollReveal = () => {
           document.body.style.color = "#000000"; //"#4a4a4a"; Dark gray text for readability
         },
         onEnterBack: () => {
-          document.body.style.backgroundColor = "#d4f1be"; // Light green
-          document.body.style.color = "#2f4f2f"; // Dark green text
+          document.body.style.backgroundColor = "#794654"; // Light green #794654 d4f1be
+          document.body.style.color = "#81b7aa"; // Dark green text #81b7aa 2f4f2f
           document.querySelectorAll(".cover").forEach(function (element) {
             element.style.backgroundColor = "#18181a";
             element.style.color = "#ffffff";
@@ -41,6 +43,7 @@ const ScrollReveal = () => {
           document.querySelectorAll(".cover").forEach(function (element) {
             element.style.backgroundColor = "transparent";
             element.style.color = "unset";
+            element.classList.remove("border-r");
           });
           document.querySelector(".revealed-content").style.display = 'none';
         },
@@ -69,12 +72,12 @@ const ScrollReveal = () => {
 
   return (
     <>
-    <div className="relative flex w-full h-[100vh] items-center justify-center mix-blend-exclusion bg-[#87bfd5]">
+    {/* <div className="relative flex w-full h-[100vh] z-11 items-center justify-center mix-blend-exclusion bg-[#87bfd5]">
     {" "}
     <h1 id="about" className="text-[2.5rem] leading-[1.1] font-bold max-w-[400px] p-6 italic mix-blend-difference">
-      Hello, My everyday browser history is filled with googling 100s of syntax errors, and "how" and "can"??
+      Hello, My everyday browser history is filled with googling 100s of syntax errors, and "how..??" and "can..??"
     </h1>
-  </div>
+  </div> */}
   <div>
     <div
       className="reveal-section relative h-[50vh]"
