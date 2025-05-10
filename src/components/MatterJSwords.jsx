@@ -2,32 +2,10 @@ import React, { useState, useEffect } from "react";
 import Matter from "matter-js";
 import gsap from "gsap";
 
-// const WORDS = [
-//   "Hello,",
-//   "My",
-//   "everyday",
-//   "browser",
-//   "history",
-//   "is",
-//   "filled",
-//   "with",
-//   "googling",
-//   "100s",
-//   "of",
-//   "syntax",
-//   "errors",
-//   "and",
-//   "how..??",
-//   "and",
-//   "can..??",
-// ];
-
-
 const sentence = "Hello, My everyday browser history is filled with googling 100s of syntax errors, and how?? and can???";
 const WORDS = sentence.split('');
 
 export default function MatterWords() {
-  const [running, setRunning] = useState(true);
   const [size, setSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -43,7 +21,6 @@ export default function MatterWords() {
 
   // Matter.js engine state
   useEffect(() => {
-    if (!running) return;
 
     let engine, runner, render;
     const wallThickness = 4;
@@ -63,7 +40,7 @@ export default function MatterWords() {
     // World setup
     engine = Matter.Engine.create();
     const world = engine.world;
-    engine.gravity.y = 0.25;
+    engine.gravity.y = 0.2;
     // Walls
     const walls = [
       Matter.Bodies.rectangle(
@@ -105,9 +82,9 @@ export default function MatterWords() {
       const y = rect.top - canvasRect.top + rect.height / 2;
       const w = rect.width;
       const h = rect.height;
-      return Matter.Bodies.rectangle(x, y, w/2, h/2, {
+      return Matter.Bodies.rectangle(x, y, w, h, {
         label: word,
-        restitution: 0.4,
+        restitution: 1,
         render: {
           fillStyle: "#fff",
           strokeStyle: "#333",
@@ -197,8 +174,8 @@ export default function MatterWords() {
         ctx.save();
         ctx.translate(body.position.x, body.position.y);
         ctx.rotate(body.angle);
-        const text = body.label;
-        const metrics = ctx.measureText(text);
+        // const text = body.label;
+        // const metrics = ctx.measureText(text);
         // const textWidth = metrics.width;
         // const textHeight = 40; // Approximate height for 2.5rem font size
         // const padding = 16;
@@ -213,7 +190,7 @@ export default function MatterWords() {
         // );
 
         ctx.fillStyle = "#fff";
-        ctx.fillText(body.label, 0, 2);
+        ctx.fillText(body.label, 0, 0);
         ctx.restore();
       });
     });
@@ -226,8 +203,9 @@ export default function MatterWords() {
         //markers: true,
         onEnter: () => {
           /* your enter code */
-          //setRunning(true);
           document.getElementById("words-container").style.visibility = "hidden";
+          document.getElementById("words-container").style.opacity = 0;
+
           const canvasRect = canvas.getBoundingClientRect();
 
           wordBodies.forEach((body, i) => {
@@ -243,18 +221,16 @@ export default function MatterWords() {
           Matter.Runner.run(runner, engine);
         },
         onLeave: () => { /* your leave code */
-          //setRunning(false);
          },
         // onEnterBack: () => { /* your enter back code */ },
         onLeaveBack: () => {
           /* your leave back code */
-          //setRunning(true);
-
+          engine.gravity.y = -1;
           document.getElementById("words-container").style.visibility =
             "visible";
+            document.getElementById("words-container").style.opacity = 1;
 
           Matter.Runner.stop(runner);
-          //runner = null;
           Matter.Render.stop(render);
           if (render && render.canvas && render.context) {
             render.context.clearRect(
@@ -263,11 +239,7 @@ export default function MatterWords() {
               render.canvas.width,
               render.canvas.height
             );
-            //render = null;
           }
-          //Matter.World.clear(engine.world);
-          //Matter.Engine.clear(engine);
-          //engine = null;
         },
       },
     });
@@ -295,7 +267,7 @@ export default function MatterWords() {
         Matter.Engine.clear(engine);
       }
     };
-  }, [running, size]);
+  }, [size]);
 
   return (
     <div className="relative flex w-full h-[100vh] z-11 items-center justify-center mix-blend-exclusion bg-[#87bfd5]">
@@ -305,7 +277,8 @@ export default function MatterWords() {
       />
       <h1
         id="words-container"
-        className="absolute top-16 text-[2.5rem] leading-[1.1] font-bold max-w-[400px] z-11 p-6 italic mix-blend-difference pointer-events-none"
+        className="absolute top-16 text-[2.5rem] leading-[1.1] font-bold max-w-[400px] z-11 p-6 italic 
+        mix-blend-difference pointer-events-none transition-opacity duration-3000"
       >
         {WORDS.map((word, i) => (
           <span key={i} className="splitwords">

@@ -12,7 +12,6 @@ import Loader from "./components/Loader";
 import ScrollReveal from "./components/SticksReveal";
 import MatterWords from "./components/MatterJSwords";
 import Header from "./components/Header";
-import SmokeOnInteraction from "./components/threejs/Smoke";
 
 const preloadAssets = (assetList) =>
   Promise.all(assetList.map((src) => preloadImage(src)));
@@ -41,7 +40,6 @@ function App() {
       {isLoaded ? (
         <>
           {loaded && <FadingPixels />}
-          {/* <SmokeOnInteraction /> */}
           <Header />
           <ScrollSuggestion />
           <ScrollAnimatedModel />

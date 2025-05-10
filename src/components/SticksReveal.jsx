@@ -72,7 +72,7 @@ const ScrollReveal = () => {
 
   return (
     <>
-  <div>
+  <div className="">
     <div
       className="reveal-section relative h-[50vh]"
       style={{ transform: "translateY(-50vh)" }}

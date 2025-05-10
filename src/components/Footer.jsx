@@ -35,7 +35,7 @@ const Footer = () => {
   
   return (
     <>
-      <footer id="footer" className="bg-[#18181a] text-[#f9f6e8] relative flex flex-col justify-around -z-1 min-h-[93svh]">
+      <footer id="footer" className="bg-[#18181a] text-[#f9f6e8] relative flex flex-col justify-around min-h-[93svh]">
         <div className="flex flex-col md:flex-row justify-around p-4 border-b border-zinc-700 mb-10">
           <div className="flex justify-between items-center font-bold text-3xl py-4">
             Yaswanth Pulavarthi

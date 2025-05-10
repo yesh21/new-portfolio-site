@@ -30,7 +30,6 @@ import p5img5 from "../assets/projects/old_portfolio/screenshot_5.png";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { faSquareArrowUpRight } from "@fortawesome/free-solid-svg-icons";
 import { SplitText } from "gsap/SplitText"; // Ensure SplitText is installed and imported
 
 gsap.registerPlugin(SplitText);
@@ -166,7 +165,7 @@ const ProjectsContainer = () => {
 
   return (
     <>
-      <div id="projects" className="parallax-container w-screen h-screen flex items-center justify-start overflow-hidden">
+      <div id="projects" className="parallax-container w-screen h-screen flex items-center justify-start overflow-hidden z-2">
         <ProjectCard {...project_docscope} />
         <ProjectCard {...project_clothing_store} />
         <ProjectCard {...project_chrome_extension_llmscope} />

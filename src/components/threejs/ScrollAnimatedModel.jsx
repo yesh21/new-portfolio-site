@@ -19,9 +19,8 @@ import {
 import video1 from "../../assets/220494_tiny.mp4";
 import video2 from "../../assets/5473981-hd_720_1366_25fps.mp4";
 import roomModelGLB from "../../assets/models/sci-fi_computer_room.glb?url";
+import smokePng from "../../assets/smoke1.png"
 
-const SMOKE_TEXTURE_URL =
-  "https://raw.githubusercontent.com/mrdoob/three.js/refs/heads/dev/examples/textures/opengameart/smoke1.png";
 
 export default function ScrollAnimatedModel() {
   useEffect(() => {
@@ -44,7 +43,7 @@ export default function ScrollAnimatedModel() {
     const lerpAmount = 0.01;
     const camera1ScrollYEnd = 2100;
     const scene1ScrollYEnd =
-      camera1ScrollYEnd + window.innerHeight + windowHalfY;
+      camera1ScrollYEnd + window.innerHeight;
     const rotationSpeed = 0.00002;
 
     let glitchPass = new GlitchPass();
@@ -281,7 +280,7 @@ export default function ScrollAnimatedModel() {
       scene2.add(new THREE.AmbientLight(0xffffff, 1));
       const loader = new THREE.TextureLoader();
       loader.load(
-        SMOKE_TEXTURE_URL,
+        smokePng,
         (texture) => {
           smokeTexture = texture;
         },
@@ -320,14 +319,14 @@ export default function ScrollAnimatedModel() {
       }
 
       function onTouchStart(event) {
-        event.preventDefault();
+        //event.preventDefault();
         for (let touch of event.touches) {
           spawnSmokeAtScreenCoords(touch.clientX, touch.clientY);
         }
       }
 
       window.addEventListener("mousemove", onPointerDown);
-      window.addEventListener("touchmove", onTouchStart);
+      window.addEventListener("touchmove", onTouchStart , { passive: true });
     };
 
     // Window resize handler
@@ -494,7 +493,7 @@ export default function ScrollAnimatedModel() {
   return (
     <>
       <canvas
-        className="w-full h-lvh min-h-screen fixed top-0"
+        className="w-full h-lvh min-h-screen fixed top-0 z-1"
         id="room-setup-canvas"
       ></canvas>
       <div className="w-full h-[2100px]">
