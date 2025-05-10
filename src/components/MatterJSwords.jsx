@@ -2,25 +2,29 @@ import React, { useState, useEffect } from "react";
 import Matter from "matter-js";
 import gsap from "gsap";
 
-const WORDS = [
-  "Hello,",
-  "My",
-  "everyday",
-  "browser",
-  "history",
-  "is",
-  "filled",
-  "with",
-  "googling",
-  "100s",
-  "of",
-  "syntax",
-  "errors",
-  "and",
-  "how..??",
-  "and",
-  "can..??",
-];
+// const WORDS = [
+//   "Hello,",
+//   "My",
+//   "everyday",
+//   "browser",
+//   "history",
+//   "is",
+//   "filled",
+//   "with",
+//   "googling",
+//   "100s",
+//   "of",
+//   "syntax",
+//   "errors",
+//   "and",
+//   "how..??",
+//   "and",
+//   "can..??",
+// ];
+
+
+const sentence = "Hello, My everyday browser history is filled with googling 100s of syntax errors, and how?? and can???";
+const WORDS = sentence.split('');
 
 export default function MatterWords() {
   const [running, setRunning] = useState(true);
@@ -101,7 +105,7 @@ export default function MatterWords() {
       const y = rect.top - canvasRect.top + rect.height / 2;
       const w = rect.width;
       const h = rect.height;
-      return Matter.Bodies.rectangle(x, y, w, h, {
+      return Matter.Bodies.rectangle(x, y, w/2, h/2, {
         label: word,
         restitution: 0.4,
         render: {
@@ -183,18 +187,24 @@ export default function MatterWords() {
       ctx.font = "bold 2.5rem Fira Code Variable";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
+      ctx.fillStyle = "#000";
+      ctx.fillRect(
+        0, 0, // x
+        canvas.clientWidth,           // width
+        canvas.clientHeight           // height
+      );
       wordBodies.forEach((body) => {
         ctx.save();
         ctx.translate(body.position.x, body.position.y);
         ctx.rotate(body.angle);
-        // const text = body.label;
-        // const metrics = ctx.measureText(text);
+        const text = body.label;
+        const metrics = ctx.measureText(text);
         // const textWidth = metrics.width;
         // const textHeight = 40; // Approximate height for 2.5rem font size
         // const padding = 16;
 
         // // Draw background rectangle
-        // ctx.fillStyle = "#fff";
+        // ctx.fillStyle = "#000";
         // ctx.fillRect(
         //   -textWidth / 2 - padding / 2, // x
         //   -textHeight / 2 - padding / 2, // y
@@ -202,8 +212,7 @@ export default function MatterWords() {
         //   textHeight + padding           // height
         // );
 
-        //   ctx.background = "transparent";
-        ctx.fillStyle = "#222";
+        ctx.fillStyle = "#fff";
         ctx.fillText(body.label, 0, 2);
         ctx.restore();
       });
@@ -299,8 +308,8 @@ export default function MatterWords() {
         className="absolute top-16 text-[2.5rem] leading-[1.1] font-bold max-w-[400px] z-11 p-6 italic mix-blend-difference pointer-events-none"
       >
         {WORDS.map((word, i) => (
-          <span key={i} className="splitwords px-3 py-1">
-            {word + " "}
+          <span key={i} className="splitwords">
+            {word}
           </span>
         ))}
       </h1>

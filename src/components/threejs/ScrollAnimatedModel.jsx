@@ -20,6 +20,9 @@ import video1 from "../../assets/220494_tiny.mp4";
 import video2 from "../../assets/5473981-hd_720_1366_25fps.mp4";
 import roomModelGLB from "../../assets/models/sci-fi_computer_room.glb?url";
 
+const SMOKE_TEXTURE_URL =
+  "https://raw.githubusercontent.com/mrdoob/three.js/refs/heads/dev/examples/textures/opengameart/smoke1.png";
+
 export default function ScrollAnimatedModel() {
   useEffect(() => {
     let renderer;
@@ -28,9 +31,7 @@ export default function ScrollAnimatedModel() {
     let updateMobileCameraRotation = 0;
     let windowHalfX = window.innerWidth / 2;
     let windowHalfY = window.innerHeight / 2;
-    // --- Animation state ---
-    let showSecondScene = false;
-
+    
     if (windowHalfX < windowHalfY) {
       mobileView = true;
     }
@@ -56,11 +57,11 @@ export default function ScrollAnimatedModel() {
 
     // Scene 2: Interactive dots grid (Perspective)
     let scene2, camera2;
-    // Mouse and raycaster for scene2 interaction
-    let mouse = new THREE.Vector2(0, 0);
-    const raycaster = new THREE.Raycaster();
-    // Dots array
-    const dots = [];
+
+    const clock = new THREE.Clock();
+    // Smoke particles array
+    let smokeTexture = null;
+    const smokeParticles = [];
 
     // Renderer
     const canvas = document.querySelector("#room-setup-canvas");
@@ -69,7 +70,9 @@ export default function ScrollAnimatedModel() {
       alpha: true,
       canvas,
     });
+
     renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
 
     // Setup function encapsulating all initialization
     function setupRoomScene() {
@@ -265,7 +268,7 @@ export default function ScrollAnimatedModel() {
     }
 
     // === Setup Scene 2 (Interactive Dots) ===
-    const setupInteractiveDotsScene = () => {
+    const setupInteractiveSmokeScene = () => {
       scene2 = new THREE.Scene();
       camera2 = new THREE.PerspectiveCamera(
         75,
@@ -273,29 +276,58 @@ export default function ScrollAnimatedModel() {
         0.1,
         1000
       );
-      camera2.position.z = 25;
+      camera2.position.z = 5;
 
-      const spacing = 1.2;
-      const gridWidth = Math.floor(window.innerWidth / 23);
-      const gridHeight = Math.floor(window.innerHeight / 23);
-      const dotGeometry = new THREE.CircleGeometry(0.1, 32);
+      scene2.add(new THREE.AmbientLight(0xffffff, 1));
+      const loader = new THREE.TextureLoader();
+      loader.load(
+        SMOKE_TEXTURE_URL,
+        (texture) => {
+          smokeTexture = texture;
+        },
+        undefined,
+        (err) => {
+          console.error("Failed to load smoke texture.", err);
+        }
+      );
 
-      dots.length = 0; // Clear dots array
+      // Smoke creation
+      function createSmoke(position) {
+        const material = new THREE.SpriteMaterial({
+          map: smokeTexture,
+          transparent: true,
+          opacity: 0.5,
+          color: new THREE.Color().setHSL(Math.random(), 0.5, 0.7),
+          depthWrite: false,
+        });
+        const sprite = new THREE.Sprite(material);
+        sprite.position.copy(position);
+        sprite.scale.set(0.07, 0.07, 0.07);
+        scene2.add(sprite);
+        smokeParticles.push({ sprite, life: 2 });
+      }
 
-      for (let i = -gridWidth / 2; i < gridWidth / 2; i++) {
-        for (let j = -gridHeight / 2; j < gridHeight / 2; j++) {
-          const dotMaterial = new THREE.MeshBasicMaterial({
-            color: 0x909090,
-            transparent: true,
-            opacity: 0.8,
-          });
-          const dot = new THREE.Mesh(dotGeometry, dotMaterial);
-          dot.position.set(i * spacing, j * spacing, 0);
-          dot.userData.originalPosition = dot.position.clone();
-          scene2.add(dot);
-          dots.push(dot);
+      function spawnSmokeAtScreenCoords(x, y) {
+        if (!smokeTexture) return;
+        const nx = (x / window.innerWidth) * 2 - 1;
+        const ny = -(y / window.innerHeight) * 2 + 1;
+        const pos = new THREE.Vector3(nx, ny, 0.5).unproject(camera2);
+        createSmoke(pos);
+      }
+
+      function onPointerDown(event) {
+        spawnSmokeAtScreenCoords(event.clientX, event.clientY);
+      }
+
+      function onTouchStart(event) {
+        event.preventDefault();
+        for (let touch of event.touches) {
+          spawnSmokeAtScreenCoords(touch.clientX, touch.clientY);
         }
       }
+
+      window.addEventListener("mousemove", onPointerDown);
+      window.addEventListener("touchmove", onTouchStart);
     };
 
     // Window resize handler
@@ -320,34 +352,9 @@ export default function ScrollAnimatedModel() {
         // Rebuild fading squares grid
         setupRoomScene();
         // Rebuild dots grid
-        setupInteractiveDotsScene();
+        setupInteractiveSmokeScene();
       }
     }
-
-    // === Hover interaction for dots ===
-    const handleDotsOnMouseMove = () => {
-      // Project mouse to world coordinates on z=0 plane
-      const planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
-      raycaster.setFromCamera(mouse, camera2);
-      raycaster.ray.intersectPlane(planeZ, mouse); // const mouse = new THREE.Vector3();
-      // const intersects = raycaster.intersectObjects(dots);
-
-      dots.forEach((dot) => {
-        const dx = dot.position.x - mouse.x;
-        const dy = dot.position.y - mouse.y;
-        const distsq = dx * dx + dy * dy;
-
-        if (distsq < 16) {
-          // distance is 4, we skipped sq root cal.
-          // Move dot aside smoothly
-          dot.position.x += 0.5;
-          dot.position.y += 0.5;
-        } else {
-          // Return dot to original position smoothly
-          dot.position.lerp(dot.userData.originalPosition, 0.1);
-        }
-      });
-    };
 
     // Mouse move handler
     function onMouseMove(event) {
@@ -368,10 +375,6 @@ export default function ScrollAnimatedModel() {
       } else if (window.scrollY < scene1ScrollYEnd) {
         // do nothing
       } else {
-        // for scene 2
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-        handleDotsOnMouseMove();
       }
     }
 
@@ -409,15 +412,7 @@ export default function ScrollAnimatedModel() {
         // // Update blur based on scroll position
       } else if (window.scrollY < scene1ScrollYEnd) {
         glitchPass.enabled = false;
-        showSecondScene = false;
-        // document.body.style.backgroundColor = "#18181a";
-        // document.body.style.color = "#ffffff";
       } else {
-        showSecondScene = true;
-        //document.body.style.backgroundColor = "#f7f5e8";
-        //document.body.style.color = "#000000";
-        // Optionally remove event listener if no longer needed
-        // window.removeEventListener('scroll', onScroll);
       }
     }
 
@@ -462,15 +457,26 @@ export default function ScrollAnimatedModel() {
         renderer.clear();
       } else {
         // Only render scene 2
-        // handleDotsOnMouseMove(); // update dot positions if needed
+        const delta = clock.getDelta();
+        for (let i = smokeParticles.length - 1; i >= 0; i--) {
+          const p = smokeParticles[i];
+          p.life -= delta;
+          if (p.life <= 0) {
+            scene2.remove(p.sprite);
+            smokeParticles.splice(i, 1);
+          } else {
+            p.sprite.material.opacity = p.life / 2;
+            p.sprite.scale.multiplyScalar(1 + delta * 0.5);
+          }
+        }
         //renderer.clear();
-        //renderer.render(scene2, camera2);
+        renderer.render(scene2, camera2);
       }
     }
 
     // Initialize scene and start animation
     setupRoomScene();
-    setupInteractiveDotsScene();
+    setupInteractiveSmokeScene();
 
     animate();
 
