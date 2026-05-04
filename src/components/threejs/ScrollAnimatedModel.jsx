@@ -22,7 +22,7 @@ import roomModelGLB from "../../assets/models/sci-fi_computer_room.glb?url";
 import smokePng from "../../assets/smoke1.webp"
 
 
-export default function ScrollAnimatedModel() {
+export default function ScrollAnimatedModel({ model }) {
   useEffect(() => {
     let renderer;
     let animationFrameId;
@@ -72,6 +72,7 @@ export default function ScrollAnimatedModel() {
 
     renderer.setSize(canvas.clientWidth, canvas.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
 
     // Setup function encapsulating all initialization
     function setupRoomScene() {
@@ -110,20 +111,25 @@ export default function ScrollAnimatedModel() {
       }
 
       async function loadAndShowModelSequentially(url, scene) {
-        const loader = new GLTFLoader();
-        const gltf = await new Promise((resolve, reject) => {
-          loader.load(url, resolve, undefined, reject);
-        });
+        let gltf;
+        if (model) {
+          gltf = model;
+        } else {
+          const loader = new GLTFLoader();
+          gltf = await new Promise((resolve, reject) => {
+            loader.load(url, resolve, undefined, reject);
+          });
+        }
 
-        const model = gltf.scene;
+        const gltfScene = model ? model.scene.clone() : gltf.scene;
 
         // Remove model from scene if it was added (usually not yet)
-        scene.remove(model);
-        scene.add(model);
+        scene.remove(gltfScene);
+        scene.add(gltfScene);
 
         // Collect all meshes
         const meshes = [];
-        model.traverse((node) => {
+        gltfScene.traverse((node) => {
           if (node.isMesh) {
             meshes.push(node);
             node.visible = false; // hide initially
@@ -146,12 +152,12 @@ export default function ScrollAnimatedModel() {
           mesh.material = wireframeMaterial;
           mesh.visible = true;
 
-          await sleep(150); // show wireframe for 50 m second
+          await sleep(50); // Slightly faster reveal
 
           // Switch to original material (full render)
           mesh.material = originalMaterial;
 
-          await sleep(30); // small delay before next mesh
+          await sleep(10); // Slightly faster reveal
         }
 
         renderer.setSize(window.innerWidth, window.innerHeight);

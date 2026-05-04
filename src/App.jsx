@@ -8,10 +8,12 @@ import Footer from "./components/Footer";
 import ScrollSuggestion from "./components/ScrollSuggestion";
 import Loader from "./components/Loader";
 // import SwipePanels from "./components/horizontal-slide";
-// import model from "./assets/models/sci-fi_computer_room.glb"
+import roomModelGLB from "./assets/models/sci-fi_computer_room.glb?url";
 import ScrollReveal from "./components/SticksReveal";
 import MatterWords from "./components/MatterJSwords";
 import Header from "./components/Header";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import * as THREE from "three";
 
 const preloadAssets = (assetList) =>
   Promise.all(assetList.map((src) => preloadImage(src)));
@@ -21,18 +23,22 @@ const preloadAssets = (assetList) =>
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [loaded, setLoaded] = useState(true);
-
-  // useEffect(() => {
-  //   preloadAssets(assets).then(() => setLoaded(true));
-  // }, [assets]);
+  const [preLoadedModel, setPreLoadedModel] = useState(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 1220);
-    const timer2 = setTimeout(() => setLoaded(false), 2500);
-    return () => {
-      clearTimeout(timer);
-      clearTimeout(timer2);
-    }; // Cleanup in case Parent unmounts early
+    const manager = new THREE.LoadingManager();
+    const loader = new GLTFLoader(manager);
+
+    loader.load(roomModelGLB, (gltf) => {
+      setPreLoadedModel(gltf);
+    }, undefined, (error) => {
+      console.error("Error pre-loading GLB:", error);
+      setIsLoaded(true); // Show site anyway on error
+    });
+
+    manager.onLoad = () => {
+      setIsLoaded(true);
+    };
   }, []);
 
   return (
@@ -42,9 +48,9 @@ function App() {
           {loaded && <FadingPixels />}
           <Header />
           <ScrollSuggestion />
-          <ScrollAnimatedModel />
+          <ScrollAnimatedModel model={preLoadedModel} />
           <SystemInfo />
-          <MatterWords/>
+          <MatterWords />
           <ScrollReveal />
           {/* <SwipePanels/> */}
           <ProjectsContainer />
