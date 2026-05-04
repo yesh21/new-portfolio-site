@@ -29,7 +29,7 @@ function App() {
   useEffect(() => {
     const manager = new THREE.LoadingManager();
     const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+    dracoLoader.setDecoderPath("/draco/");
     const loader = new GLTFLoader(manager);
     loader.setDRACOLoader(dracoLoader);
 

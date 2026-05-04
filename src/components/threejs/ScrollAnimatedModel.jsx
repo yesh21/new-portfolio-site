@@ -6,17 +6,8 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { GlitchPass } from "three/examples/jsm/postprocessing/GlitchPass.js";
-// import { TTFLoader } from "three/examples/jsm/loaders/TTFLoader.js";
-// import { Font } from "three/examples/jsm/loaders/FontLoader.js";
-// import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { HorizontalBlurShader } from "three/examples/jsm/shaders/HorizontalBlurShader.js";
-//import { VerticalBlurShader } from 'three/examples/jsm/shaders/VerticalBlurShader.js';
-import {
-  CSS2DRenderer,
-  CSS2DObject,
-} from "three/examples/jsm/renderers/CSS2DRenderer.js";
-//import video1 from "../../assets/852292-hd_1728_1080_25fps.mp4"
 import video1 from "../../assets/desktop-display-landscape.mp4";
 import video2 from "../../assets/desktop-display-portrait.mp4";
 import roomModelGLB from "../../assets/models/sci-fi_computer_room.glb?url";
@@ -117,7 +108,7 @@ export default function ScrollAnimatedModel({ model }) {
           gltf = model;
         } else {
           const dracoLoader = new DRACOLoader();
-          dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+          dracoLoader.setDecoderPath("/draco/");
           const loader = new GLTFLoader();
           loader.setDRACOLoader(dracoLoader);
           gltf = await new Promise((resolve, reject) => {
@@ -144,7 +135,9 @@ export default function ScrollAnimatedModel({ model }) {
           const lastElement = meshes.pop(); // Remove the last element
           meshes.splice(1, 0, lastElement); // Insert the last element at the second position
         }
-        //await sleep(800);
+        
+        // Add a delay before starting the reveal animation to allow page transitions to settle
+        await sleep(1000);
 
         // Reveal meshes one by one with wireframe first, then full material
         for (const mesh of meshes) {
