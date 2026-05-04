@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
@@ -115,7 +116,10 @@ export default function ScrollAnimatedModel({ model }) {
         if (model) {
           gltf = model;
         } else {
+          const dracoLoader = new DRACOLoader();
+          dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
           const loader = new GLTFLoader();
+          loader.setDRACOLoader(dracoLoader);
           gltf = await new Promise((resolve, reject) => {
             loader.load(url, resolve, undefined, reject);
           });

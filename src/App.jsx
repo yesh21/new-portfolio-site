@@ -13,6 +13,7 @@ import ScrollReveal from "./components/SticksReveal";
 import MatterWords from "./components/MatterJSwords";
 import Header from "./components/Header";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import * as THREE from "three";
 
 const preloadAssets = (assetList) =>
@@ -27,7 +28,10 @@ function App() {
 
   useEffect(() => {
     const manager = new THREE.LoadingManager();
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
     const loader = new GLTFLoader(manager);
+    loader.setDRACOLoader(dracoLoader);
 
     loader.load(roomModelGLB, (gltf) => {
       setPreLoadedModel(gltf);
