@@ -16,10 +16,10 @@ import {
   CSS2DObject,
 } from "three/examples/jsm/renderers/CSS2DRenderer.js";
 //import video1 from "../../assets/852292-hd_1728_1080_25fps.mp4"
-import video1 from "../../assets/220494_tiny.mp4";
-import video2 from "../../assets/5473981-hd_720_1366_25fps.mp4";
+import video1 from "../../assets/desktop-display-landscape.mp4";
+import video2 from "../../assets/desktop-display-portrait.mp4";
 import roomModelGLB from "../../assets/models/sci-fi_computer_room.glb?url";
-import smokePng from "../../assets/smoke1.png"
+import smokePng from "../../assets/smoke1.webp"
 
 
 export default function ScrollAnimatedModel() {
@@ -30,7 +30,7 @@ export default function ScrollAnimatedModel() {
     let updateMobileCameraRotation = 0;
     let windowHalfX = window.innerWidth / 2;
     let windowHalfY = window.innerHeight / 2;
-    
+
     if (windowHalfX < windowHalfY) {
       mobileView = true;
     }
@@ -174,9 +174,9 @@ export default function ScrollAnimatedModel() {
           "Welcome to my site",
           x,
           70 +
-            desktopMonitorText.actualBoundingBoxAscent +
-            desktopMonitorText.actualBoundingBoxDescent +
-            3
+          desktopMonitorText.actualBoundingBoxAscent +
+          desktopMonitorText.actualBoundingBoxDescent +
+          3
         );
 
         //ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -326,7 +326,7 @@ export default function ScrollAnimatedModel() {
       }
 
       window.addEventListener("mousemove", onPointerDown);
-      window.addEventListener("touchmove", onTouchStart , { passive: true });
+      window.addEventListener("touchmove", onTouchStart, { passive: true });
     };
 
     // Window resize handler

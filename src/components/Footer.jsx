@@ -1,4 +1,4 @@
-import logo from "../assets/logo.jpg"
+import logo from "../assets/logo.webp"
 import React, { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

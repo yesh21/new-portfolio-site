@@ -1,32 +1,32 @@
 import ProjectCard from "./ProjectCard";
 import { useEffect } from "react";
 
-import p1img1 from "../assets/projects/docscope/screenshot_1.png";
-import p1img2 from "../assets/projects/docscope/screenshot_2.png";
-import p1img3 from "../assets/projects/docscope/screenshot_3.png";
-import p1img4 from "../assets/projects/docscope/screenshot_4.png";
-import p1img5 from "../assets/projects/docscope/screenshot_5.png";
+import p1img1 from "../assets/projects/docscope/screenshot_1.webp";
+import p1img2 from "../assets/projects/docscope/screenshot_2.webp";
+import p1img3 from "../assets/projects/docscope/screenshot_3.webp";
+import p1img4 from "../assets/projects/docscope/screenshot_4.webp";
+import p1img5 from "../assets/projects/docscope/screenshot_5.webp";
 
-import p2img1 from "../assets/projects/clothing_store/screenshot_1.png";
-import p2img2 from "../assets/projects/clothing_store/screenshot_2.png";
-import p2img3 from "../assets/projects/clothing_store/screenshot_3.png";
-import p2img4 from "../assets/projects/clothing_store/screenshot_4.png";
-import p2img5 from "../assets/projects/clothing_store/screenshot_5.png";
+import p2img1 from "../assets/projects/clothing_store/screenshot_1.webp";
+import p2img2 from "../assets/projects/clothing_store/screenshot_2.webp";
+import p2img3 from "../assets/projects/clothing_store/screenshot_3.webp";
+import p2img4 from "../assets/projects/clothing_store/screenshot_4.webp";
+import p2img5 from "../assets/projects/clothing_store/screenshot_5.webp";
 
-import p3img1 from "../assets/projects/chrome_extension_llmscope/demo.gif";
-import p3img2 from "../assets/projects/chrome_extension_llmscope/extension-ui.gif";
+import p3img1 from "../assets/projects/chrome_extension_llmscope/demo.webp";
+import p3img2 from "../assets/projects/chrome_extension_llmscope/extension-ui.webp";
 
-import p4img1 from "../assets/projects/movie_booking_site/screenshot_1.png";
-import p4img2 from "../assets/projects/movie_booking_site/screenshot_2.png";
-import p4img3 from "../assets/projects/movie_booking_site/screenshot_3.png";
-import p4img4 from "../assets/projects/movie_booking_site/screenshot_4.png";
-import p4img5 from "../assets/projects/movie_booking_site/screenshot_5.png";
+import p4img1 from "../assets/projects/movie_booking_site/screenshot_1.webp";
+import p4img2 from "../assets/projects/movie_booking_site/screenshot_2.webp";
+import p4img3 from "../assets/projects/movie_booking_site/screenshot_3.webp";
+import p4img4 from "../assets/projects/movie_booking_site/screenshot_4.webp";
+import p4img5 from "../assets/projects/movie_booking_site/screenshot_5.webp";
 
-import p5img1 from "../assets/projects/old_portfolio/screenshot_1.png";
-import p5img2 from "../assets/projects/old_portfolio/screenshot_2.png";
-import p5img3 from "../assets/projects/old_portfolio/screenshot_3.png";
-import p5img4 from "../assets/projects/old_portfolio/screenshot_4.png";
-import p5img5 from "../assets/projects/old_portfolio/screenshot_5.png";
+import p5img1 from "../assets/projects/old_portfolio/screenshot_1.webp";
+import p5img2 from "../assets/projects/old_portfolio/screenshot_2.webp";
+import p5img3 from "../assets/projects/old_portfolio/screenshot_3.webp";
+import p5img4 from "../assets/projects/old_portfolio/screenshot_4.webp";
+import p5img5 from "../assets/projects/old_portfolio/screenshot_5.webp";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

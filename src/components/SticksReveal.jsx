@@ -72,50 +72,50 @@ const ScrollReveal = () => {
 
   return (
     <>
-  <div className="">
-    <div
-      className="reveal-section relative h-[50vh]"
-      style={{ transform: "translateY(-50vh)" }}
-    >
-      <div className="revealed-content absolute hidden flex w-full h-[50vh] items-center justify-center">
-        <div className="md:w-1/2">
-          <div class="ml-12 mx-auto text-2xl flex flex-wrap gap-2">
-            <span class="text-gray-400">&lt;</span>
-            <span class="text-sky-700">div</span>
-            <span class="text-blue-400">className</span>
-            <span class="">=</span>
-            <span class="text-orange-400">"Name"</span>
-            <span class="text-gray-400">&gt;</span>
+      <div className="">
+        <div
+          className="reveal-section relative h-[50vh]"
+          style={{ transform: "translateY(-50vh)" }}
+        >
+          <div className="revealed-content absolute hidden flex w-full h-[50vh] items-center justify-center">
+            <div className="md:w-1/2">
+              <div class="ml-12 mx-auto text-2xl flex flex-wrap gap-2">
+                <span class="text-gray-400">&lt;</span>
+                <span class="text-sky-700">div</span>
+                <span class="text-blue-400">className</span>
+                <span class="">=</span>
+                <span class="text-orange-400">"Name"</span>
+                <span class="text-gray-400">&gt;</span>
+              </div>
+              <h1 className="ml-12 text-3xl text-center border-l">Yaswanth Pulavarthi</h1>
+              <div class="ml-12 text-2xl flex flex-wrap gap-2">
+                <span class="text-gray-400">&lt;</span>
+                <span class="text-sky-700">/div</span>
+                <span class="text-gray-400 border-r animate-pulse">&gt;</span>
+              </div>
+            </div>
           </div>
-          <h1 className="ml-12 text-3xl text-center border-l">Yaswanth here</h1>
-          <div class="ml-12 text-2xl flex flex-wrap gap-2">
-            <span class="text-gray-400">&lt;</span>
-            <span class="text-sky-700">/div</span>
-            <span class="text-gray-400 border-r animate-pulse">&gt;</span>
+
+          <div className="cover absolute top-0 h-screen w-1/6 text-5xl text-center z-10 left-0 flex items-center justify-center">
+            S
+          </div>
+          <div className="cover absolute top-0 h-screen w-1/6 text-5xl text-center z-10 left-1/6 flex items-center justify-center">
+            C
+          </div>
+          <div className="cover absolute top-0 h-screen w-1/6 text-5xl text-center z-10 left-2/6 flex items-center justify-center">
+            R
+          </div>
+          <div className="cover absolute top-0 h-screen w-1/6 text-5xl text-center z-10 left-3/6 flex items-center justify-center">
+            O
+          </div>
+          <div className="cover absolute top-0 h-screen w-1/6 text-5xl text-center z-10 left-4/6 flex items-center justify-center">
+            L
+          </div>
+          <div className="cover absolute top-0 h-screen w-1/6 text-5xl text-center z-10 left-5/6 flex items-center justify-center">
+            L
           </div>
         </div>
       </div>
-
-      <div className="cover absolute top-0 h-screen w-1/6 text-5xl text-center z-10 left-0 flex items-center justify-center">
-        S
-      </div>
-      <div className="cover absolute top-0 h-screen w-1/6 text-5xl text-center z-10 left-1/6 flex items-center justify-center">
-        C
-      </div>
-      <div className="cover absolute top-0 h-screen w-1/6 text-5xl text-center z-10 left-2/6 flex items-center justify-center">
-        R
-      </div>
-      <div className="cover absolute top-0 h-screen w-1/6 text-5xl text-center z-10 left-3/6 flex items-center justify-center">
-        O
-      </div>
-      <div className="cover absolute top-0 h-screen w-1/6 text-5xl text-center z-10 left-4/6 flex items-center justify-center">
-        L
-      </div>
-      <div className="cover absolute top-0 h-screen w-1/6 text-5xl text-center z-10 left-5/6 flex items-center justify-center">
-        L
-      </div>
-    </div>
-    </div>
     </>
   );
 };
