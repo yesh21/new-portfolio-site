@@ -135,9 +135,9 @@ export default function ScrollAnimatedModel({ model }) {
           const lastElement = meshes.pop(); // Remove the last element
           meshes.splice(1, 0, lastElement); // Insert the last element at the second position
         }
-        
+
         // Add a delay before starting the reveal animation to allow page transitions to settle
-        await sleep(1000);
+        await sleep(800);
 
         // Reveal meshes one by one with wireframe first, then full material
         for (const mesh of meshes) {

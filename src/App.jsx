@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 import Footer from "./components/Footer";
 import ScrollSuggestion from "./components/ScrollSuggestion";
 import Loader from "./components/Loader";
-// import SwipePanels from "./components/horizontal-slide";
 import roomModelGLB from "./assets/models/sci-fi_computer_room.glb?url";
 import ScrollReveal from "./components/SticksReveal";
 import MatterWords from "./components/MatterJSwords";

@@ -96,15 +96,17 @@ export const FadingPixels = () => {
     
 
     const handleResize = () => {
-      // Clear previous pixels
-      while (scene.children.length > 0) {
-        const obj = scene.children[0];
-        obj.geometry?.dispose?.();
-        obj.material?.dispose?.();
-        scene.remove(obj);
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+
+      renderer.setSize(width, height);
+      if (camera) {
+        camera.left = -width / 2;
+        camera.right = width / 2;
+        camera.top = height / 2;
+        camera.bottom = -height / 2;
+        camera.updateProjectionMatrix();
       }
-      
-      setupScene(); // rebuild grid
     };
 
     window.addEventListener('resize', handleResize);
